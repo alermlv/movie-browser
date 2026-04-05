@@ -10,16 +10,19 @@ import {
 
 export const homeConfig = [
   {
+    key: "trendingMovies",
     title: "Trending Movies",
     type: TMDB_TYPE.MOVIE,
     path: TMDB_PATHS.TRENDING_MOVIES,
   },
   {
+    key: "trendingTv",
     title: "Trending TV Shows",
     type: TMDB_TYPE.TV,
     path: TMDB_PATHS.TRENDING_TV,
   },
   {
+    key: "topMoviesLastMonth",
     title: "Top Movies Last Month",
     type: TMDB_TYPE.MOVIE,
     path: TMDB_PATHS.DISCOVER(TMDB_TYPE.MOVIE),
@@ -30,6 +33,7 @@ export const homeConfig = [
     }),
   },
   {
+    key: "topTvLastMonth",
     title: "Top TV Shows Last Month",
     type: TMDB_TYPE.TV,
     path: TMDB_PATHS.DISCOVER(TMDB_TYPE.TV),
@@ -40,16 +44,19 @@ export const homeConfig = [
     }),
   },
   {
+    key: "nowPlayingMovies",
     title: "Now Playing Movies",
     type: TMDB_TYPE.MOVIE,
     path: TMDB_PATHS.NOW_PLAYING_MOVIES,
   },
   {
+    key: "onTheAirTv",
     title: "On The Air TV Shows",
     type: TMDB_TYPE.TV,
     path: TMDB_PATHS.ON_THE_AIR_TV,
   },
   {
+    key: "topMoviesLastYear",
     title: "Top Movies Last Year",
     type: TMDB_TYPE.MOVIE,
     path: TMDB_PATHS.DISCOVER(TMDB_TYPE.MOVIE),
@@ -61,6 +68,7 @@ export const homeConfig = [
     }),
   },
   {
+    key: "topTvLastYear",
     title: "Top TV Shows Last Year",
     type: TMDB_TYPE.TV,
     path: TMDB_PATHS.DISCOVER(TMDB_TYPE.TV),
@@ -72,16 +80,19 @@ export const homeConfig = [
     }),
   },
   {
+    key: "topRatedMovies",
     title: "Top Rated Movies",
     type: TMDB_TYPE.MOVIE,
     path: TMDB_PATHS.TOP_RATED_MOVIES,
   },
   {
+    key: "topRatedTv",
     title: "Top Rated TV Shows",
     type: TMDB_TYPE.TV,
     path: TMDB_PATHS.TOP_RATED_TV,
   },
   {
+    key: "actionMovies",
     title: "Action Movies",
     type: TMDB_TYPE.MOVIE,
     path: TMDB_PATHS.DISCOVER(TMDB_TYPE.MOVIE),
@@ -91,6 +102,7 @@ export const homeConfig = [
     }),
   },
   {
+    key: "comedyMovies",
     title: "Comedy Movies",
     type: TMDB_TYPE.MOVIE,
     path: TMDB_PATHS.DISCOVER(TMDB_TYPE.MOVIE),
@@ -100,6 +112,7 @@ export const homeConfig = [
     }),
   },
   {
+    key: "scifiMovies",
     title: "Sci-Fi Movies",
     type: TMDB_TYPE.MOVIE,
     path: TMDB_PATHS.DISCOVER(TMDB_TYPE.MOVIE),
@@ -109,6 +122,7 @@ export const homeConfig = [
     }),
   },
   {
+    key: "dramaTv",
     title: "Drama TV Shows",
     type: TMDB_TYPE.TV,
     path: TMDB_PATHS.DISCOVER(TMDB_TYPE.TV),
@@ -118,11 +132,13 @@ export const homeConfig = [
     }),
   },
   {
+    key: "upcomingMovies",
     title: "Upcoming Movies",
     type: TMDB_TYPE.MOVIE,
     path: TMDB_PATHS.UPCOMING_MOVIES,
   },
   {
+    key: "upcomingAnimatedMovies",
     title: "Upcoming Animated Movies",
     type: TMDB_TYPE.MOVIE,
     path: TMDB_PATHS.DISCOVER(TMDB_TYPE.MOVIE),
@@ -133,6 +149,7 @@ export const homeConfig = [
     }),
   },
   {
+    key: "topRatedAnimatedMovies",
     title: "Top Rated Animated Movies",
     type: TMDB_TYPE.MOVIE,
     path: TMDB_PATHS.DISCOVER(TMDB_TYPE.MOVIE),
@@ -144,6 +161,7 @@ export const homeConfig = [
     }),
   },
   {
+    key: "kidsAnimatedMovies",
     title: "Kids Animated Movies",
     type: TMDB_TYPE.MOVIE,
     path: TMDB_PATHS.DISCOVER(TMDB_TYPE.MOVIE),
