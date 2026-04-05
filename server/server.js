@@ -2,18 +2,23 @@ import express from "express";
 import cors from "cors";
 import { env } from "./config/env.js";
 import { router } from "./router/index.js";
-import { handleError, handleNotFound } from "./middleware/error-handler.js";
+import { handleNotFound, handleError } from "./middleware/error-handler.js";
 
-const app = createServer();
+const app = createApp();
 
 startServer();
 
-function createServer() {
+function createApp() {
   const app = express();
-  
-  app.use(cors());
+
+  app.use(
+    cors({
+      origin: env.CLIENT_ORIGIN,
+    }),
+  );
+
   app.use(express.json());
-  
+
   app.use("/api", router);
 
   app.use(handleNotFound);
