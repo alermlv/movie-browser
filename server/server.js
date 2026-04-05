@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { env } from "./config/env.js";
+import { router } from "./router/index.js";
 
 const app = createServer();
 
@@ -12,12 +13,7 @@ function createServer() {
   app.use(cors());
   app.use(express.json());
   
-  app.get("/api/health", (request, response) => {
-    response.json({
-      ok: true,
-      service: "movie-browser-api"
-    });
-  });
+  app.use("/api", router);
 
   return app;
 }
