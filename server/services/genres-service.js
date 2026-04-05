@@ -1,13 +1,12 @@
 import { getTmdb } from "./tmdb-client.js";
+import { normalizeGenresMap } from "../utils/normalize-tmdb.js";
 
 export async function getGenresData(genresParams) {
-  const type = genresParams.type || "all";
-
-  if (type === "all") {
+  if (genresParams.type === "all") {
     return fetchAllGenres();
   }
 
-  return fetchGenresByType(type);
+  return fetchGenresByType(genresParams.type);
 }
 
 async function fetchAllGenres() {
@@ -18,8 +17,8 @@ async function fetchAllGenres() {
 
   return {
     byType: {
-      movie: movieData.genres || [],
-      tv: tvData.genres || [],
+      movie: normalizeGenresMap(movieData.genres || []),
+      tv: normalizeGenresMap(tvData.genres || []),
     },
   };
 }
@@ -29,7 +28,7 @@ async function fetchGenresByType(type) {
 
   return {
     byType: {
-      [type]: data.genres || [],
+      [type]: normalizeGenresMap(data.genres || []),
     },
   };
 }
