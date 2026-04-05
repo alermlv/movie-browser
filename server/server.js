@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import { env } from "./config/env.js";
 import { router } from "./router/index.js";
+import { handleError, handleNotFound } from "./middleware/error-handler.js";
 
 const app = createServer();
 
@@ -14,6 +15,9 @@ function createServer() {
   app.use(express.json());
   
   app.use("/api", router);
+
+  app.use(handleNotFound);
+  app.use(handleError);
 
   return app;
 }
