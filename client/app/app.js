@@ -10,6 +10,7 @@ import {
 } from "./storage/storage.js";
 import { runMigrations } from "./state/migrations.js";
 import { normalizeState } from "./state/normalize-state.js";
+import { runRouteEffects } from "./actions/route-effects.js";
 
 init();
 
@@ -47,6 +48,7 @@ function loadPersistedState() {
 
 function handleStateChange(state) {
   savePersistedState(state);
+  runRouteEffects(state);
   renderRoute();
 
   console.log("State changed:", state);
