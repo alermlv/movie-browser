@@ -5,3 +5,5 @@ export const STORAGE_KEYS = {
   GENRES: `${APP_NAME}:genres`,
   SEARCH_HISTORY: `${APP_NAME}:search-history`,
 };
+
+export const API_BASE_URL = "/api";
