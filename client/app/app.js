@@ -8,6 +8,8 @@ import {
   saveGenresCache,
   saveSearchHistory,
 } from "./storage/storage.js";
+import { runMigrations } from "./state/migrations.js";
+import { normalizeState } from "./state/normalize-state.js";
 
 init();
 
@@ -20,10 +22,12 @@ function init() {
 
 function hydrateAppState() {
   const loadedState = loadPersistedState();
+  const migratedState = runMigrations(loadedState);
+  const normalizedState = normalizeState(migratedState);
 
   commitState((state) => ({
     ...state,
-    ...loadedState,
+    ...normalizedState,
     ui: {
       ...state.ui,
       isHydrated: true,
