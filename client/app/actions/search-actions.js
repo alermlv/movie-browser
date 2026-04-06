@@ -1,16 +1,18 @@
 import { commitState } from "../state/state.js";
-import { getHomeData } from "../services/api.js";
+import { getSearchData } from "../services/api.js";
 
-export async function loadHomePage() {
+export async function loadSearchPage(route) {
   startLoading();
 
   try {
-    const data = await getHomeData();
+    const data = await getSearchData(route.query);
 
     commitState((state) => ({
       ...state,
-      home: {
-        sections: data.sections || {},
+      search: {
+        totalPages: data.totalPages || 0,
+        totalResults: data.totalResults || 0,
+        items: data.items || [],
       },
       ui: {
         ...state.ui,
