@@ -1,3 +1,5 @@
+import { ROUTES } from "../router/routes.js";
+
 let state = createInitialState();
 const listeners = new Set();
 
@@ -6,7 +8,7 @@ export function createInitialState() {
     version: 1,
 
     route: {
-      name: "home",
+      name: ROUTES.HOME,
       params: {},
       query: {},
     },
