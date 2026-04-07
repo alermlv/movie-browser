@@ -1,5 +1,5 @@
-import { subscribe, commitState } from "./state/state.js";
-import { setupRouter, renderRoute } from "./router/router.js";
+import { subscribe, commitState, getState } from "./state/state.js";
+import { setupRouter, readRouteFromUrl, renderRoute } from "./router/router.js";
 import {
   loadFavorites,
   loadGenresCache,
@@ -19,19 +19,25 @@ function init() {
 
   hydrateAppState();
   setupRouter();
+  runRouteEffects(getState().route, getState().genres);
 }
 
 function hydrateAppState() {
   const loadedState = loadPersistedState();
   const migratedState = runMigrations(loadedState);
   const normalizedState = normalizeState(migratedState);
+  const route = readRouteFromUrl();
 
   commitState((state) => ({
     ...state,
     ...normalizedState,
+    route,
     ui: {
       ...state.ui,
       isHydrated: true,
+      activeDialog: null,
+      error: null,
+      notice: null,
     },
   }));
 }
@@ -48,7 +54,6 @@ function loadPersistedState() {
 
 function handleStateChange(state) {
   savePersistedState(state);
-  runRouteEffects(state);
   renderRoute();
 
   console.log("State changed:", state);

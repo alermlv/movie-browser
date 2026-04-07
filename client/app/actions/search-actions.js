@@ -2,8 +2,6 @@ import { commitState } from "../state/state.js";
 import { getSearchData } from "../services/api.js";
 
 export async function loadSearchPage(route) {
-  startLoading();
-
   try {
     const data = await getSearchData(route.query);
 
@@ -16,33 +14,16 @@ export async function loadSearchPage(route) {
       },
       ui: {
         ...state.ui,
-        isLoading: false,
         error: null,
       },
     }));
   } catch (error) {
-    finishWithError(error);
+    commitState((state) => ({
+      ...state,
+      ui: {
+        ...state.ui,
+        error: error.message,
+      },
+    }));
   }
-}
-
-function startLoading() {
-  commitState((state) => ({
-    ...state,
-    ui: {
-      ...state.ui,
-      isLoading: true,
-      error: null,
-    },
-  }));
-}
-
-function finishWithError(error) {
-  commitState((state) => ({
-    ...state,
-    ui: {
-      ...state.ui,
-      isLoading: false,
-      error: error.message,
-    },
-  }));
 }

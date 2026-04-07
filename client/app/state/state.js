@@ -42,7 +42,6 @@ export function createInitialState() {
 
     ui: {
       isHydrated: false,
-      isLoading: false,
       error: null,
       notice: null,
       activeDialog: null,

@@ -1,8 +1,8 @@
 import { ROUTES } from "./routes.js";
 import { commitState, getState } from "../state/state.js";
+import { runRouteEffects } from "../actions/route-effects.js";
 
 export function setupRouter() {
-  syncRouteWithUrl();
   window.addEventListener("popstate", syncRouteWithUrl);
 }
 
@@ -11,7 +11,6 @@ export function navigate(route) {
 
   window.history.pushState({}, "", url);
   syncRouteWithUrl();
-  resetTransientUiState();
 }
 
 export function renderRoute() {
@@ -26,14 +25,27 @@ export function renderRoute() {
   app.innerHTML = `<h1>${route.name}</h1>`;
 }
 
-function syncRouteWithUrl() {
+export function readRouteFromUrl() {
   const url = new URL(window.location.href);
-  const route = parseRouteFromUrl(url);
+  return parseRouteFromUrl(url);
+}
+
+function syncRouteWithUrl() {
+  const route = readRouteFromUrl();
 
   commitState((state) => ({
     ...state,
     route,
+    ui: {
+      ...state.ui,
+      activeDialog: null,
+      error: null,
+      notice: null,
+    },
   }));
+
+  const state = getState();
+  runRouteEffects(state.route, state.genres);
 }
 
 function parseRouteFromUrl(url) {
@@ -96,18 +108,6 @@ function parseRouteFromUrl(url) {
     params: {},
     query: {},
   };
-}
-
-function resetTransientUiState() {
-  commitState((state) => ({
-    ...state,
-    ui: {
-      ...state.ui,
-      activeDialog: null,
-      error: null,
-      notice: null,
-    },
-  }));
 }
 
 function buildUrl(route) {

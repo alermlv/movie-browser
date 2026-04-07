@@ -5,9 +5,15 @@ import { loadDetailsPage } from "./details-actions.js";
 import { loadGenres } from "./genres-actions.js";
 
 let previousRouteKey = "";
+let isGenresLoading = false;
 
-export function runRouteEffects(state) {
-  const routeKey = createRouteKey(state.route);
+export function runRouteEffects(route, genres) {
+  runPageEffect(route);
+  runGenresEffect(genres);
+}
+
+function runPageEffect(route) {
+  const routeKey = JSON.stringify(route);
 
   if (routeKey === previousRouteKey) {
     return;
@@ -15,11 +21,6 @@ export function runRouteEffects(state) {
 
   previousRouteKey = routeKey;
 
-  runPageEffect(state.route);
-  runGenresEffect(state.genres);
-}
-
-function runPageEffect(route) {
   if (route.name === ROUTES.HOME) {
     loadHomePage();
     return;
@@ -43,9 +44,13 @@ function runGenresEffect(genres) {
     return;
   }
 
-  loadGenres();
-}
+  if (isGenresLoading) {
+    return;
+  }
 
-function createRouteKey(route) {
-  return JSON.stringify(route);
+  isGenresLoading = true;
+
+  loadGenres().finally(() => {
+    isGenresLoading = false;
+  });
 }

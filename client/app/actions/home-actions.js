@@ -2,8 +2,6 @@ import { commitState } from "../state/state.js";
 import { getHomeData } from "../services/api.js";
 
 export async function loadHomePage() {
-  startLoading();
-
   try {
     const data = await getHomeData();
 
@@ -14,33 +12,16 @@ export async function loadHomePage() {
       },
       ui: {
         ...state.ui,
-        isLoading: false,
         error: null,
       },
     }));
   } catch (error) {
-    finishWithError(error);
+    commitState((state) => ({
+      ...state,
+      ui: {
+        ...state.ui,
+        error: error.message,
+      },
+    }));
   }
-}
-
-function startLoading() {
-  commitState((state) => ({
-    ...state,
-    ui: {
-      ...state.ui,
-      isLoading: true,
-      error: null,
-    },
-  }));
-}
-
-function finishWithError(error) {
-  commitState((state) => ({
-    ...state,
-    ui: {
-      ...state.ui,
-      isLoading: false,
-      error: error.message,
-    },
-  }));
 }

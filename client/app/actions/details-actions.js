@@ -8,8 +8,6 @@ export async function loadDetailsPage(route) {
     return;
   }
 
-  startLoading();
-
   try {
     const data = await getDetailsData(type, id);
 
@@ -20,33 +18,16 @@ export async function loadDetailsPage(route) {
       },
       ui: {
         ...state.ui,
-        isLoading: false,
         error: null,
       },
     }));
   } catch (error) {
-    finishWithError(error);
+    commitState((state) => ({
+      ...state,
+      ui: {
+        ...state.ui,
+        error: error.message,
+      },
+    }));
   }
-}
-
-function startLoading() {
-  commitState((state) => ({
-    ...state,
-    ui: {
-      ...state.ui,
-      isLoading: true,
-      error: null,
-    },
-  }));
-}
-
-function finishWithError(error) {
-  commitState((state) => ({
-    ...state,
-    ui: {
-      ...state.ui,
-      isLoading: false,
-      error: error.message,
-    },
-  }));
 }

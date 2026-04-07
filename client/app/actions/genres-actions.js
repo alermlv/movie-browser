@@ -2,8 +2,6 @@ import { commitState } from "../state/state.js";
 import { getGenresData } from "../services/api.js";
 
 export async function loadGenres() {
-  startLoading();
-
   try {
     const data = await getGenresData();
 
@@ -17,33 +15,16 @@ export async function loadGenres() {
       },
       ui: {
         ...state.ui,
-        isLoading: false,
         error: null,
       },
     }));
   } catch (error) {
-    finishWithError(error);
+    commitState((state) => ({
+      ...state,
+      ui: {
+        ...state.ui,
+        error: error.message,
+      },
+    }));
   }
-}
-
-function startLoading() {
-  commitState((state) => ({
-    ...state,
-    ui: {
-      ...state.ui,
-      isLoading: true,
-      error: null,
-    },
-  }));
-}
-
-function finishWithError(error) {
-  commitState((state) => ({
-    ...state,
-    ui: {
-      ...state.ui,
-      isLoading: false,
-      error: error.message,
-    },
-  }));
 }
