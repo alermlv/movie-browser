@@ -37,8 +37,12 @@ function syncRouteWithUrl() {
 }
 
 function parseRouteFromUrl(url) {
-  if (url.pathname === "/" || url.pathname === "/home") {
-    return createHomeRoute();
+  if (url.pathname === "/") {
+    return {
+      name: ROUTES.HOME,
+      params: {},
+      query: {},
+    };
   }
 
   if (url.pathname === "/search") {
@@ -52,14 +56,6 @@ function parseRouteFromUrl(url) {
   if (url.pathname === "/favorites") {
     return {
       name: ROUTES.FAVORITES,
-      params: {},
-      query: Object.fromEntries(url.searchParams.entries()),
-    };
-  }
-
-  if (url.pathname === "/details") {
-    return {
-      name: ROUTES.DETAILS,
       params: {},
       query: Object.fromEntries(url.searchParams.entries()),
     };
@@ -95,10 +91,6 @@ function parseRouteFromUrl(url) {
     }
   }
 
-  return createHomeRoute();
-}
-
-function createHomeRoute() {
   return {
     name: ROUTES.HOME,
     params: {},
@@ -128,6 +120,11 @@ function buildUrl(route) {
     return search ? `/search?${search}` : "/search";
   }
 
+  if (route.name === ROUTES.FAVORITES) {
+    const search = new URLSearchParams(route.query).toString();
+    return search ? `/favorites?${search}` : "/favorites";
+  }
+
   if (route.name === ROUTES.DETAILS) {
     const { type, id } = route.params;
 
@@ -138,14 +135,6 @@ function buildUrl(route) {
     if (type === "tv" && id) {
       return `/tv/${encodeURIComponent(id)}`;
     }
-
-    const search = new URLSearchParams(route.query).toString();
-    return search ? `/details?${search}` : "/details";
-  }
-
-  if (route.name === ROUTES.FAVORITES) {
-    const search = new URLSearchParams(route.query).toString();
-    return search ? `/favorites?${search}` : "/favorites";
   }
 
   return "/";

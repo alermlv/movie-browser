@@ -6,12 +6,15 @@ import {
 } from "../utils/validators.js";
 import { asyncHandler } from "../middleware/error-handler.js";
 
-export const detailsRouter = express.Router();
+export const tvDetailsRouter = express.Router({ mergeParams: true });
 
-detailsRouter.get(
-  "/:type/:id",
-  asyncHandler(async function handleGetDetails(request, response) {
-    const detailsParams = readDetailsParams(request.params);
+tvDetailsRouter.get(
+  "/",
+  asyncHandler(async function handleGetTvDetails(request, response) {
+    const detailsParams = readDetailsParams({
+      type: "tv",
+      id: request.params.id,
+    });
 
     validateDetailsParams(detailsParams);
 

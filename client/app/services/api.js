@@ -9,9 +9,15 @@ export async function getSearchData(params = {}) {
 }
 
 export async function getDetailsData(type, id) {
-  return getJson(
-    `/details/${encodeURIComponent(type)}/${encodeURIComponent(id)}`,
-  );
+  if (type === "movie") {
+    return getJson(`/movie/${encodeURIComponent(id)}`);
+  }
+
+  if (type === "tv") {
+    return getJson(`/tv/${encodeURIComponent(id)}`);
+  }
+
+  throw new Error("Invalid details type");
 }
 
 export async function getGenresData(params = {}) {
