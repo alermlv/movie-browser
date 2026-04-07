@@ -1,6 +1,17 @@
 import { ROUTES } from "./routes.js";
 import { commitState, getState } from "../state/state.js";
 import { runRouteEffects } from "../actions/route-effects.js";
+import { renderHomePage } from "../pages/home.js";
+import { renderSearchPage } from "../pages/search.js";
+import { renderDetailsPage } from "../pages/details.js";
+import { renderFavoritesPage } from "../pages/favorites.js";
+
+const routeRenderers = {
+  [ROUTES.HOME]: renderHomePage,
+  [ROUTES.SEARCH]: renderSearchPage,
+  [ROUTES.DETAILS]: renderDetailsPage,
+  [ROUTES.FAVORITES]: renderFavoritesPage,
+};
 
 export function setupRouter() {
   window.addEventListener("popstate", syncRouteWithUrl);
@@ -20,9 +31,10 @@ export function renderRoute() {
     return;
   }
 
-  const { route } = getState();
+  const state = getState();
+  const renderPage = routeRenderers[state.route.name] || renderHomePage;
 
-  app.innerHTML = `<h1>${route.name}</h1>`;
+  app.innerHTML = renderPage(state);
 }
 
 export function readRouteFromUrl() {
