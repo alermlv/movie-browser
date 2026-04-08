@@ -12,3 +12,11 @@ body {
 main {
   display: block;
 }
+
+#app {
+  min-height: 100vh;
+}
+
+input::placeholder {
+  color: var(--color-text-muted);
+}

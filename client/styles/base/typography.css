@@ -15,3 +15,21 @@ h3 {
   line-height: var(--line-height-normal);
   font-weight: var(--font-weight-semibold);
 }
+
+body {
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-tight);
+  font-weight: var(--font-weight-regular);
+}
+
+button {
+  font-size: var(--font-size-button);
+  line-height: var(--line-height-tight);
+  font-weight: var(--font-weight-semibold);
+}
+
+.text-caption {
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-tight);
+  font-weight: var(--font-weight-regular);
+}
