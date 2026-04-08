@@ -1,0 +1,14 @@
+html,
+body {
+  min-height: 100vh;
+}
+
+body {
+  background: var(--color-bg-base);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-base);
+}
+
+main {
+  display: block;
+}
