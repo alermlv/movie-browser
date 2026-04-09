@@ -33,8 +33,7 @@ export function renderRoute() {
   const state = getState();
   const renderPage = routeRenderers[state.route.name] || renderHomePage;
 
-  pageRoot.innerHTML = "";
-  pageRoot.appendChild(renderPage(state));
+  pageRoot.replaceChildren(renderPage(state));
 }
 
 export function readRouteFromUrl() {
@@ -60,7 +59,7 @@ function syncRouteWithUrl() {
   runRouteEffects(state.route, state.genres);
 }
 
-function parseRouteFromUrl(url) {
+export function parseRouteFromUrl(url) {
   if (url.pathname === "/") {
     return {
       name: ROUTES.HOME,

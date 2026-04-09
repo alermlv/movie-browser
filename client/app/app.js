@@ -12,6 +12,7 @@ import { mountAppShell } from "./layout/app-shell.js";
 import { runMigrations } from "./state/migrations.js";
 import { normalizeState } from "./state/normalize-state.js";
 import { runRouteEffects } from "./actions/route-effects.js";
+import { setupLinkDelegation } from "./router/link-delegation.js";
 
 init();
 
@@ -22,6 +23,7 @@ function init() {
 
   hydrateAppState();
   setupRouter();
+  setupLinkDelegation();
   runRouteEffects(getState().route, getState().genres);
 }
 
