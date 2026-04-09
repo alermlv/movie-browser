@@ -1,4 +1,5 @@
 import { ROUTES } from "./routes.js";
+import { getPageRoot } from "../layout/app-shell.js";
 import { commitState, getState } from "../state/state.js";
 import { runRouteEffects } from "../actions/route-effects.js";
 import { renderHomePage } from "../pages/home.js";
@@ -25,16 +26,15 @@ export function navigate(route) {
 }
 
 export function renderRoute() {
-  const app = document.getElementById("app");
+  const pageRoot = getPageRoot();
 
-  if (!app) {
-    return;
-  }
+  if (!pageRoot) return;
 
   const state = getState();
   const renderPage = routeRenderers[state.route.name] || renderHomePage;
 
-  app.innerHTML = renderPage(state);
+  pageRoot.innerHTML = "";
+  pageRoot.appendChild(renderPage(state));
 }
 
 export function readRouteFromUrl() {

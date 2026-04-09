@@ -1,5 +1,6 @@
 export function renderDetailsPage(state) {
-  return `
-    <h1>${state.route.name}</h1>
-  `;
+  const detailsPage = document.createElement("div");
+  detailsPage.classList.add("page", "details-page");
+  
+  return detailsPage;
 }

@@ -1,0 +1,14 @@
+.button--search {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+
+  flex: 0 0 auto;
+
+  height: 32px;
+  padding: 0 var(--space-2);
+
+  background: var(--color-brand-primary);
+  border-radius: var(--radius-lg);
+}

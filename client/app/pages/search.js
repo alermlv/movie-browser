@@ -1,5 +1,6 @@
 export function renderSearchPage(state) {
-  return `
-    <h1>${state.route.name}</h1>
-  `;
+  const searchPage = document.createElement("div");
+  searchPage.classList.add("page", "search-page");
+
+  return searchPage;
 }

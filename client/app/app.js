@@ -8,6 +8,7 @@ import {
   saveGenresCache,
   saveSearchHistory,
 } from "./storage/storage.js";
+import { mountAppShell } from "./layout/app-shell.js";
 import { runMigrations } from "./state/migrations.js";
 import { normalizeState } from "./state/normalize-state.js";
 import { runRouteEffects } from "./actions/route-effects.js";
@@ -16,6 +17,8 @@ init();
 
 function init() {
   subscribe(handleStateChange);
+
+  mountAppShell();
 
   hydrateAppState();
   setupRouter();
