@@ -1,0 +1,11 @@
+.menu-header {
+  border-bottom: 1px solid var(--color-border-default);
+}
+
+.menu__inner {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  
+  padding: var(--space-1) 0;
+}

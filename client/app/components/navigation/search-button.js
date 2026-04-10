@@ -4,9 +4,9 @@ export function createSearchButton() {
   const searchButton = document.createElement("button");
   searchButton.type = "button";
   searchButton.classList.add("button", "button--search");
-  searchButton.setAttribute("aria-label", "search-overlay");
+  searchButton.setAttribute("aria-label", "Open search");
   searchButton.tabIndex = 1;
-  searchButton.dataset.openSearch = "";
+  searchButton.dataset.openSearchOverlay = "";
   
   const icon = createIcon("icon-search");
 

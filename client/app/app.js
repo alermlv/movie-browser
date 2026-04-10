@@ -13,6 +13,9 @@ import { runMigrations } from "./state/migrations.js";
 import { normalizeState } from "./state/normalize-state.js";
 import { runRouteEffects } from "./actions/route-effects.js";
 import { setupLinkDelegation } from "./router/link-delegation.js";
+import { setupOverlayDelegation } from "./overlays/overlay-delegation.js";
+import { renderOverlay } from "./overlays/render-overlay.js";
+import { updateScrollLock } from "./layout/scroll-lock.js";
 
 init();
 
@@ -20,10 +23,10 @@ function init() {
   subscribe(handleStateChange);
 
   mountAppShell();
-
   hydrateAppState();
   setupRouter();
   setupLinkDelegation();
+  setupOverlayDelegation();
   runRouteEffects(getState().route, getState().genres);
 }
 
@@ -60,6 +63,8 @@ function loadPersistedState() {
 function handleStateChange(state) {
   savePersistedState(state);
   renderRoute();
+  renderOverlay(state);
+  updateScrollLock(state);
 
   console.log("State changed:", state);
 }

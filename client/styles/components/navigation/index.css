@@ -1,21 +1,4 @@
-@import "./side-menu-button.css";
+@import "./navigation.css";
+@import "./menu-button.css";
 @import "./home-link.css";
 @import "./search-button.css";
-
-.nav {
-  border-bottom: 1px solid var(--color-border-default);
-}
-
-.nav--sticky {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-.nav__inner {
-  display: flex;
-  align-items: center;
-  
-  width: 100%;
-  padding: var(--space-1) var(--space-4) var(--space-1) 0;
-}

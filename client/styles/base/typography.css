@@ -28,6 +28,12 @@ button {
   font-weight: var(--font-weight-semibold);
 }
 
+a {
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-tight);
+  font-weight: var(--font-weight-semibold);
+}
+
 .text-caption {
   font-size: var(--font-size-caption);
   line-height: var(--line-height-tight);
