@@ -7,11 +7,9 @@ import {
   normalizeSearchQuery,
   canSearch,
 } from "./search-service.js";
-import {
-  renderSearchResults,
-  renderSearchHistory,
-  clearSearchResults,
-} from "./search-results.js";
+import { renderSearchNodes, clearSearchResults } from "./search-results.js";
+import { createSearchResult } from "./search-result.js";
+import { createSearchHistoryItem } from "./search-history-item.js";
 import {
   createQueryHistoryItem,
   addSearchHistoryItem,
@@ -60,10 +58,10 @@ export function bindSearchController({ form, input, resultsList }) {
 }
 
 export function showInitialSearchState(resultsList) {
-  const state = getState();
-  const historyItems = toSearchHistoryViewModels(state.searchHistory);
+  const historyItems = toSearchHistoryViewModels(getState().searchHistory);
+  const historyNodes = historyItems.map(createSearchHistoryItem);
 
-  renderSearchHistory(resultsList, historyItems);
+  renderSearchNodes(resultsList, historyNodes);
 }
 
 function scheduleSearch(input, resultsList) {
@@ -73,8 +71,11 @@ function scheduleSearch(input, resultsList) {
 
   if (!query.length) {
     latestRenderedRequestId = 0;
+
     const historyItems = toSearchHistoryViewModels(getState().searchHistory);
-    renderSearchHistory(resultsList, historyItems);
+    const historyNodes = historyItems.map(createSearchHistoryItem);
+
+    renderSearchNodes(resultsList, historyNodes);
     return;
   }
 
@@ -93,7 +94,9 @@ function scheduleSearch(input, resultsList) {
       }
 
       latestRenderedRequestId = requestId;
-      renderSearchResults(resultsList, results);
+
+      const resultNodes = results.map(createSearchResult);
+      renderSearchNodes(resultsList, resultNodes);
     } catch (error) {
       if (error?.name === "AbortError") {
         return;
