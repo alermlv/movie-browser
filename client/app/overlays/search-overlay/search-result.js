@@ -9,6 +9,8 @@ export function createSearchResult(result) {
   link.href = `/${encodeURIComponent(result.type)}/${encodeURIComponent(result.id)}`;
   link.dataset.searchResult = "true";
   link.dataset.searchTitle = result.title;
+  link.dataset.searchType = result.type;
+  link.dataset.searchId = result.id;
   link.dataset.closeDialog = "search";
 
   const title = document.createElement("span");

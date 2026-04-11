@@ -1,4 +1,8 @@
 import { commitState } from "../state/state.js";
+import {
+  createResultHistoryItem,
+  addSearchHistoryItem,
+} from "./search-overlay/history-service.js";
 
 export function setupOverlayDelegation() {
   document.addEventListener("click", handleOverlayClick);
@@ -22,11 +26,15 @@ function handleOverlayClick(event) {
 
   const searchResultLink = event.target.closest("[data-search-result='true']");
   if (searchResultLink) {
-    const searchTitle = searchResultLink.dataset.searchTitle || "";
+    const historyItem = createResultHistoryItem({
+      title: searchResultLink.dataset.searchTitle || "",
+      type: searchResultLink.dataset.searchType || "",
+      id: searchResultLink.dataset.searchId || "",
+    });
 
     commitState((state) => ({
       ...state,
-      searchHistory: addSearchHistoryItem(state.searchHistory, searchTitle),
+      searchHistory: addSearchHistoryItem(state.searchHistory, historyItem),
       ui: {
         ...state.ui,
         activeDialog: null,
@@ -40,11 +48,8 @@ function handleOverlayClick(event) {
     "[data-search-history-item='true']",
   );
   if (searchHistoryLink) {
-    const value = searchHistoryLink.dataset.searchHistoryValue || "";
-
     commitState((state) => ({
       ...state,
-      searchHistory: addSearchHistoryItem(state.searchHistory, value),
       ui: {
         ...state.ui,
         activeDialog: null,
@@ -84,19 +89,4 @@ function handleOverlayClick(event) {
       activeDialog: null,
     },
   }));
-}
-
-function addSearchHistoryItem(searchHistory, value) {
-  const normalizedValue = value.trim();
-
-  if (!normalizedValue) {
-    return Array.isArray(searchHistory) ? searchHistory : [];
-  }
-
-  const history = Array.isArray(searchHistory) ? [...searchHistory] : [];
-  const filteredHistory = history.filter(
-    (item) => item.trim() !== normalizedValue,
-  );
-
-  return [normalizedValue, ...filteredHistory].slice(0, 10);
 }

@@ -25,11 +25,11 @@ export function renderSearchResults(list, results) {
   });
 }
 
-export function renderSearchHistory(list, searchHistory) {
+export function renderSearchHistory(list, historyItems) {
   list.replaceChildren();
 
-  searchHistory.forEach((value) => {
-    list.appendChild(createSearchHistoryItem(value));
+  historyItems.forEach((historyItem) => {
+    list.appendChild(createSearchHistoryItem(historyItem));
   });
 }
 

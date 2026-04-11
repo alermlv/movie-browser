@@ -12,6 +12,11 @@ import {
   renderSearchHistory,
   clearSearchResults,
 } from "./search-results.js";
+import {
+  createQueryHistoryItem,
+  addSearchHistoryItem,
+  toSearchHistoryViewModels,
+} from "./history-service.js";
 
 const SEARCH_DEBOUNCE_MS = 250;
 
@@ -33,9 +38,11 @@ export function bindSearchController({ form, input, resultsList }) {
       return;
     }
 
+    const historyItem = createQueryHistoryItem(query);
+
     commitState((state) => ({
       ...state,
-      searchHistory: addSearchHistoryItem(state.searchHistory, query),
+      searchHistory: addSearchHistoryItem(state.searchHistory, historyItem),
       ui: {
         ...state.ui,
         activeDialog: null,
@@ -54,7 +61,9 @@ export function bindSearchController({ form, input, resultsList }) {
 
 export function showInitialSearchState(resultsList) {
   const state = getState();
-  renderSearchHistory(resultsList, state.searchHistory);
+  const historyItems = toSearchHistoryViewModels(state.searchHistory);
+
+  renderSearchHistory(resultsList, historyItems);
 }
 
 function scheduleSearch(input, resultsList) {
@@ -64,7 +73,8 @@ function scheduleSearch(input, resultsList) {
 
   if (!query.length) {
     latestRenderedRequestId = 0;
-    renderSearchHistory(resultsList, getState().searchHistory);
+    const historyItems = toSearchHistoryViewModels(getState().searchHistory);
+    renderSearchHistory(resultsList, historyItems);
     return;
   }
 
@@ -92,15 +102,4 @@ function scheduleSearch(input, resultsList) {
       clearSearchResults(resultsList);
     }
   }, SEARCH_DEBOUNCE_MS);
-}
-
-function addSearchHistoryItem(searchHistory, query) {
-  const normalizedQuery = normalizeSearchQuery(query);
-  const history = Array.isArray(searchHistory) ? [...searchHistory] : [];
-
-  const filteredHistory = history.filter(
-    (item) => normalizeSearchQuery(item) !== normalizedQuery,
-  );
-
-  return [normalizedQuery, ...filteredHistory].slice(0, 10);
 }
