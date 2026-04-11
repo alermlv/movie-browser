@@ -1,5 +1,5 @@
 import { commitState } from "../state/state.js";
-import { getDetailsData } from "../services/api.js";
+import { getDetailsData } from "../api/api.js";
 
 export async function loadDetailsPage(route) {
   const { type, id } = route.params;

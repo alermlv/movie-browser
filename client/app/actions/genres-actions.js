@@ -1,5 +1,5 @@
 import { commitState } from "../state/state.js";
-import { getGenresData } from "../services/api.js";
+import { getGenresData } from "../api/api.js";
 
 export async function loadGenres() {
   try {

@@ -1,5 +1,5 @@
 import { commitState } from "../state/state.js";
-import { getHomeData } from "../services/api.js";
+import { getHomeData } from "../api/api.js";
 
 export async function loadHomePage() {
   try {

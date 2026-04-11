@@ -1,5 +1,5 @@
 import { commitState } from "../state/state.js";
-import { getSearchData } from "../services/api.js";
+import { getSearchData } from "../api/api.js";
 
 export async function loadSearchPage(route) {
   try {

@@ -1,4 +1,4 @@
-import { getSearchData } from "../../services/api.js";
+import { getSearchData } from "../../api/api.js";
 
 const SEARCH_MIN_LENGTH = 2;
 const SEARCH_LIMIT = 10;
