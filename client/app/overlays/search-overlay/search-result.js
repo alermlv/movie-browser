@@ -5,7 +5,7 @@ export function createSearchResult(result) {
   item.classList.add("search-result");
 
   const link = document.createElement("a");
-  link.classList.add("search-result__item");
+  link.classList.add("search-result__link");
   link.href = `/${encodeURIComponent(result.type)}/${encodeURIComponent(result.id)}`;
   link.dataset.searchResult = "true";
   link.dataset.searchTitle = result.title;
@@ -16,6 +16,7 @@ export function createSearchResult(result) {
   title.textContent = result.title;
 
   const icon = createIcon("icon-chevron-forward");
+  icon.classList.add("icon--small");
 
   link.append(title, icon);
   item.appendChild(link);

@@ -4,3 +4,8 @@
 
   fill: var(--color-text-primary);
 }
+
+.icon--small {
+  width: 16px;
+  height: 16px;
+}

@@ -30,7 +30,24 @@ function handleOverlayClick(event) {
       ui: {
         ...state.ui,
         activeDialog: null,
-        searchDraft: searchTitle,
+      },
+    }));
+
+    return;
+  }
+
+  const searchHistoryLink = event.target.closest(
+    "[data-search-history-item='true']",
+  );
+  if (searchHistoryLink) {
+    const value = searchHistoryLink.dataset.searchHistoryValue || "";
+
+    commitState((state) => ({
+      ...state,
+      searchHistory: addSearchHistoryItem(state.searchHistory, value),
+      ui: {
+        ...state.ui,
+        activeDialog: null,
       },
     }));
 

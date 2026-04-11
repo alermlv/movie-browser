@@ -1,6 +1,9 @@
 import { createSearchHeader } from "./search-header.js";
 import { createSearchResults } from "./search-results.js";
-import { bindSearchController } from "./search-controller.js";
+import {
+  bindSearchController,
+  showInitialSearchState,
+} from "./search-controller.js";
 
 export function createSearchOverlay() {
   const overlay = document.createElement("section");
@@ -14,6 +17,8 @@ export function createSearchOverlay() {
   const { container: resultsContainer, list: resultsList } =
     createSearchResults();
 
+  showInitialSearchState(resultsList);
+
   bindSearchController({
     form,
     input,
@@ -24,7 +29,6 @@ export function createSearchOverlay() {
 
   queueMicrotask(() => {
     input.focus();
-    input.select();
   });
 
   return overlay;

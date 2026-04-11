@@ -45,7 +45,6 @@ export function createInitialState() {
       error: null,
       notice: null,
       activeDialog: null,
-      searchDraft: "",
     },
   };
 }

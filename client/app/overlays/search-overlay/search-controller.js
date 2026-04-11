@@ -7,7 +7,11 @@ import {
   normalizeSearchQuery,
   canSearch,
 } from "./search-service.js";
-import { renderSearchResults } from "./search-results.js";
+import {
+  renderSearchResults,
+  renderSearchHistory,
+  clearSearchResults,
+} from "./search-results.js";
 
 const SEARCH_DEBOUNCE_MS = 250;
 
@@ -35,7 +39,6 @@ export function bindSearchController({ form, input, resultsList }) {
       ui: {
         ...state.ui,
         activeDialog: null,
-        searchDraft: query,
       },
     }));
 
@@ -49,8 +52,9 @@ export function bindSearchController({ form, input, resultsList }) {
   });
 }
 
-export function getInitialSearchDraft() {
-  return getState().ui.searchDraft || "";
+export function showInitialSearchState(resultsList) {
+  const state = getState();
+  renderSearchHistory(resultsList, state.searchHistory);
 }
 
 function scheduleSearch(input, resultsList) {
@@ -58,9 +62,15 @@ function scheduleSearch(input, resultsList) {
 
   window.clearTimeout(debounceTimer);
 
+  if (!query.length) {
+    latestRenderedRequestId = 0;
+    renderSearchHistory(resultsList, getState().searchHistory);
+    return;
+  }
+
   if (query.length < getSearchMinLength()) {
     latestRenderedRequestId = 0;
-    resultsList.replaceChildren();
+    clearSearchResults(resultsList);
     return;
   }
 
@@ -79,7 +89,7 @@ function scheduleSearch(input, resultsList) {
         return;
       }
 
-      resultsList.replaceChildren();
+      clearSearchResults(resultsList);
     }
   }, SEARCH_DEBOUNCE_MS);
 }

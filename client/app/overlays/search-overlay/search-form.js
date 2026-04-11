@@ -1,4 +1,4 @@
-export function createSearchForm(initialValue = "") {
+export function createSearchForm() {
   const form = document.createElement("form");
   form.classList.add("search-form");
   form.setAttribute("role", "search");
@@ -11,7 +11,7 @@ export function createSearchForm(initialValue = "") {
   input.placeholder = "Search";
   input.autocomplete = "off";
   input.spellcheck = false;
-  input.value = initialValue;
+  input.value = "";
   input.setAttribute("aria-label", "Search");
 
   form.appendChild(input);

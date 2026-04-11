@@ -1,4 +1,5 @@
 import { createSearchResult } from "./search-result.js";
+import { createSearchHistoryItem } from "./search-history-item.js";
 
 export function createSearchResults() {
   const container = document.createElement("div");
@@ -22,4 +23,16 @@ export function renderSearchResults(list, results) {
   results.forEach((result) => {
     list.appendChild(createSearchResult(result));
   });
+}
+
+export function renderSearchHistory(list, searchHistory) {
+  list.replaceChildren();
+
+  searchHistory.forEach((value) => {
+    list.appendChild(createSearchHistoryItem(value));
+  });
+}
+
+export function clearSearchResults(list) {
+  list.replaceChildren();
 }
