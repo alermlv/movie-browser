@@ -12,16 +12,13 @@ export function mountAppShell() {
 
   app.innerHTML = "";
 
-  const header = document.createElement("header");
+  const navigation = createNavigation();
   const main = document.createElement("main");
   const overlays = document.createElement("div");
 
   overlays.id = "overlay-root";
 
-  const navigation = createNavigation();
-
-  header.appendChild(navigation);
-  app.append(header, main, overlays);
+  app.append(navigation, main, overlays);
 
   pageRoot = main;
   overlayRoot = overlays;
