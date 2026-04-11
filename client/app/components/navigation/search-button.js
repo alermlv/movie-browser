@@ -6,7 +6,7 @@ export function createSearchButton() {
   searchButton.classList.add("button", "button--search");
   searchButton.setAttribute("aria-label", "Open search");
   searchButton.tabIndex = 1;
-  searchButton.dataset.openSearchOverlay = "";
+  searchButton.dataset.openDialog = "search";
   
   const icon = createIcon("icon-search");
 

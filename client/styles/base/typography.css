@@ -28,8 +28,14 @@ button {
   font-weight: var(--font-weight-semibold);
 }
 
+input {
+  font-size: var(--font-size-button);
+  line-height: var(--line-height-tight);
+  font-weight: var(--font-weight-semibold);
+}
+
 a {
-  font-size: var(--font-size-body);
+  font-size: var(--font-size-button);
   line-height: var(--line-height-tight);
   font-weight: var(--font-weight-semibold);
 }

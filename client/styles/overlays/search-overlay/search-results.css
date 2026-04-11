@@ -1,0 +1,10 @@
+.search-results {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.search-results__list {
+  display: flex;
+  flex-direction: column;
+}

@@ -4,8 +4,8 @@ export async function getHomeData() {
   return getJson("/home");
 }
 
-export async function getSearchData(params = {}) {
-  return getJson("/search", params);
+export async function getSearchData(params = {}, options = {}) {
+  return getJson("/search", params, options);
 }
 
 export async function getDetailsData(type, id) {
@@ -24,9 +24,11 @@ export async function getGenresData(params = {}) {
   return getJson("/genres", params);
 }
 
-async function getJson(path, params = {}) {
+async function getJson(path, params = {}, options = {}) {
   const url = buildUrl(path, params);
-  const response = await fetch(url);
+  const response = await fetch(url, {
+    signal: options.signal,
+  });
 
   if (!response.ok) {
     throw await createApiError(response);
@@ -39,7 +41,12 @@ function buildUrl(path, params = {}) {
   const url = new URL(`${API_BASE_URL}${path}`, window.location.origin);
 
   Object.entries(params).forEach(([key, value]) => {
-    if (value !== undefined && value !== null && value !== "") {
+    if (
+      key !== "signal" &&
+      value !== undefined &&
+      value !== null &&
+      value !== ""
+    ) {
       url.searchParams.set(key, String(value));
     }
   });

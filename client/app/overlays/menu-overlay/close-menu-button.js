@@ -4,7 +4,7 @@ export function createCloseMenuButton() {
   const closeMenuButton = document.createElement("button");
   closeMenuButton.type = "button";
   closeMenuButton.classList.add("button", "button--close-menu");
-  closeMenuButton.setAttribute("aria-label", "close-menu");
+  closeMenuButton.setAttribute("aria-label", "Close menu");
   closeMenuButton.dataset.closeDialog = "menu";
 
   const icon = createIcon("icon-close");

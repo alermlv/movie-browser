@@ -13,8 +13,27 @@ body {
   min-height: 100vh;
 }
 
+input {
+  background: none;
+  border: none;
+  outline: none;
+}
+
 input::placeholder {
   color: var(--color-text-muted);
+}
+
+input[type="search"] {
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  display: none;
+  -webkit-appearance: none;
 }
 
 button {

@@ -1,0 +1,10 @@
+.search-header {
+  border-bottom: 1px solid var(--color-border-default);
+}
+
+.search-header__inner {
+  display: flex;
+  align-items: center;
+
+  padding: var(--space-1) 0 var(--space-1) var(--space-4);
+}

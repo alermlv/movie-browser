@@ -20,6 +20,23 @@ function handleOverlayClick(event) {
     return;
   }
 
+  const searchResultLink = event.target.closest("[data-search-result='true']");
+  if (searchResultLink) {
+    const searchTitle = searchResultLink.dataset.searchTitle || "";
+
+    commitState((state) => ({
+      ...state,
+      searchHistory: addSearchHistoryItem(state.searchHistory, searchTitle),
+      ui: {
+        ...state.ui,
+        activeDialog: null,
+        searchDraft: searchTitle,
+      },
+    }));
+
+    return;
+  }
+
   const closeDialogTrigger = event.target.closest("[data-close-dialog]");
   if (closeDialogTrigger) {
     commitState((state) => ({
@@ -50,4 +67,19 @@ function handleOverlayClick(event) {
       activeDialog: null,
     },
   }));
+}
+
+function addSearchHistoryItem(searchHistory, value) {
+  const normalizedValue = value.trim();
+
+  if (!normalizedValue) {
+    return Array.isArray(searchHistory) ? searchHistory : [];
+  }
+
+  const history = Array.isArray(searchHistory) ? [...searchHistory] : [];
+  const filteredHistory = history.filter(
+    (item) => item.trim() !== normalizedValue,
+  );
+
+  return [normalizedValue, ...filteredHistory].slice(0, 10);
 }

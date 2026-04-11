@@ -9,7 +9,7 @@ export function createMenuOverlay() {
   const panel = document.createElement("section");
   panel.classList.add("menu-overlay__panel");
   panel.dataset.dialogPanel = "menu";
-  panel.setAttribute("aria-label", "menu");
+  panel.setAttribute("aria-label", "Menu");
   panel.setAttribute("role", "dialog");
   panel.setAttribute("aria-modal", "true");
 
