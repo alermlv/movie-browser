@@ -1,5 +1,5 @@
 import { getTmdb } from "./tmdb-client.js";
-import { normalizeGenresMap } from "../utils/normalize-tmdb.js";
+import { normalizeGenresMap } from "../utilities/normalize-tmdb.js";
 
 export async function getGenresData(genresParams) {
   if (genresParams.type === "all") {

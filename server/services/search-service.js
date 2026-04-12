@@ -1,5 +1,5 @@
 import { getTmdb } from "./tmdb-client.js";
-import { normalizeSearchResult } from "../utils/normalize-tmdb.js";
+import { normalizeSearchResult } from "../utilities/normalize-tmdb.js";
 
 export async function getSearchData(searchParams) {
   const scenario = decideSearchScenario(searchParams);

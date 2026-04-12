@@ -3,7 +3,7 @@ import { getDetailsData } from "../services/details-service.js";
 import {
   readDetailsParams,
   validateDetailsParams,
-} from "../utils/validators.js";
+} from "../utilities/validators.js";
 import { asyncHandler } from "../middleware/error-handler.js";
 
 export const tvDetailsRouter = express.Router({ mergeParams: true });

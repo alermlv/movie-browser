@@ -1,6 +1,6 @@
 import express from "express";
 import { getSearchData } from "../services/search-service.js";
-import { readSearchParams, validateSearchParams } from "../utils/validators.js";
+import { readSearchParams, validateSearchParams } from "../utilities/validators.js";
 import { asyncHandler } from "../middleware/error-handler.js";
 
 export const searchRouter = express.Router();

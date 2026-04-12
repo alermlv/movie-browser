@@ -1,6 +1,6 @@
 import { homeConfig } from "../config/home-config.js";
 import { getTmdb } from "./tmdb-client.js";
-import { normalizeHomeSection } from "../utils/normalize-tmdb.js";
+import { normalizeHomeSection } from "../utilities/normalize-tmdb.js";
 
 export async function getHomeData() {
   const sections = await fetchHomeSections();

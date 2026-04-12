@@ -1,6 +1,6 @@
 import express from "express";
 import { getGenresData } from "../services/genres-service.js";
-import { readGenresParams, validateGenresParams } from "../utils/validators.js";
+import { readGenresParams, validateGenresParams } from "../utilities/validators.js";
 import { asyncHandler } from "../middleware/error-handler.js";
 
 export const genresRouter = express.Router();
