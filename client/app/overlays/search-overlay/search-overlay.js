@@ -32,9 +32,5 @@ export function createSearchOverlay() {
 
   overlay.append(title, header, resultsContainer);
 
-  queueMicrotask(() => {
-    input.focus();
-  });
-
   return overlay;
 }

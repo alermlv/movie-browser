@@ -1,4 +1,4 @@
-import { createMenuLink } from "./menu-link.js";
+import { createMenuItem } from "./menu-item.js";
 
 export function createMenuNavigation() {
   const nav = document.createElement("nav");
@@ -8,10 +8,10 @@ export function createMenuNavigation() {
   const list = document.createElement("ul");
   list.classList.add("menu-overlay__list");
 
-  const favoritesLink = createMenuLink("Favorites", "/favorites");
-  const moviesLink = createMenuLink("Movies", "/search?type=movie");
-  const tvShowsLink = createMenuLink("TV Shows", "/search?type=tv");
-  const animationLink = createMenuLink("Animation", "/search?genre=animation");
+  const favoritesLink = createMenuItem("Favorites", "/favorites");
+  const moviesLink = createMenuItem("Movies", "/search?type=movie");
+  const tvShowsLink = createMenuItem("TV Shows", "/search?type=tv");
+  const animationLink = createMenuItem("Animation", "/search?genre=animation");
 
   list.append(favoritesLink, moviesLink, tvShowsLink, animationLink);
   nav.appendChild(list);

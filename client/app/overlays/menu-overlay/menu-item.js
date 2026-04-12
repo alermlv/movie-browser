@@ -1,4 +1,4 @@
-export function createMenuLink(name, path) {
+export function createMenuItem(name, path) {
   const item = document.createElement("li");
   item.classList.add("menu-overlay__item");
 
