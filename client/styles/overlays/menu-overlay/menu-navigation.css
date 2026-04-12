@@ -1,0 +1,8 @@
+.menu-overlay__nav {
+  margin: var(--space-2) 0 0;
+}
+
+.menu-overlay__list {
+  display: flex;
+  flex-direction: column;
+}

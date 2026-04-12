@@ -3,8 +3,7 @@ import { createIcon } from "../../components/icon.js";
 export function createCloseMenuButton() {
   const closeMenuButton = document.createElement("button");
   closeMenuButton.type = "button";
-  closeMenuButton.classList.add("button", "button--close-menu");
-  closeMenuButton.setAttribute("aria-label", "Close menu");
+  closeMenuButton.classList.add("button", "button--close");
   closeMenuButton.dataset.closeDialog = "menu";
 
   const icon = createIcon("icon-close");

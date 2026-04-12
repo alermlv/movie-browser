@@ -1,8 +1,8 @@
-.menu-header {
+.menu-overlay__header {
   border-bottom: 1px solid var(--color-border-default);
 }
 
-.menu__inner {
+.menu-overlay__header-inner {
   display: flex;
   align-items: center;
   justify-content: flex-end;

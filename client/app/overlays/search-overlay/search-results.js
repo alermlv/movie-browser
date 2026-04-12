@@ -4,7 +4,7 @@ export function createSearchResults() {
   container.dataset.searchResults = "true";
 
   const list = document.createElement("ul");
-  list.classList.add("search-results");
+  list.classList.add("search-overlay__list");
 
   container.appendChild(list);
 

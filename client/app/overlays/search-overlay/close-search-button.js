@@ -3,8 +3,7 @@ import { createIcon } from "../../components/icon.js";
 export function createCloseSearchButton() {
   const closeSearchButton = document.createElement("button");
   closeSearchButton.type = "button";
-  closeSearchButton.classList.add("button--close-search");
-  closeSearchButton.setAttribute("aria-label", "Close search");
+  closeSearchButton.classList.add("button", "button--close");
   closeSearchButton.dataset.closeDialog = "search";
 
   const icon = createIcon("icon-close");

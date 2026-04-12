@@ -10,8 +10,13 @@ export function createSearchOverlay() {
   overlay.classList.add("search-overlay");
   overlay.setAttribute("role", "dialog");
   overlay.setAttribute("aria-modal", "true");
-  overlay.setAttribute("aria-label", "Search");
+  overlay.setAttribute("aria-labelledby", "search-overlay-title");
   overlay.dataset.dialog = "search";
+
+  const title = document.createElement("h2");
+  title.id = "search-overlay-title";
+  title.classList.add("visually-hidden");
+  title.textContent = "Search";
 
   const { header, form, input } = createSearchHeader();
   const { container: resultsContainer, list: resultsList } =
@@ -25,7 +30,7 @@ export function createSearchOverlay() {
     resultsList,
   });
 
-  overlay.append(header, resultsContainer);
+  overlay.append(title, header, resultsContainer);
 
   queueMicrotask(() => {
     input.focus();

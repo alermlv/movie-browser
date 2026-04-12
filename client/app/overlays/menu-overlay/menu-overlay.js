@@ -1,5 +1,5 @@
 import { createMenuHeader } from "./menu-header.js";
-import { createMenuLinks } from "./menu-links.js";
+import { createMenuNavigation } from "./menu-navigation.js";
 
 export function createMenuOverlay() {
   const backdrop = document.createElement("div");
@@ -9,14 +9,19 @@ export function createMenuOverlay() {
   const panel = document.createElement("section");
   panel.classList.add("menu-overlay__panel");
   panel.dataset.dialogPanel = "menu";
-  panel.setAttribute("aria-label", "Menu");
+  panel.setAttribute("aria-labelledby", "menu-overlay-title");
   panel.setAttribute("role", "dialog");
   panel.setAttribute("aria-modal", "true");
 
-  const header = createMenuHeader();
-  const links = createMenuLinks();
+  const title = document.createElement("h2");
+  title.id = "menu-overlay-title";
+  title.classList.add("visually-hidden");
+  title.textContent = "Menu";
 
-  panel.append(header, links);
+  const header = createMenuHeader();
+  const links = createMenuNavigation();
+
+  panel.append(title, header, links);
   backdrop.appendChild(panel);
 
   return backdrop;

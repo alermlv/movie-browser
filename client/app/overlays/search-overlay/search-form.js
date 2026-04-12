@@ -1,11 +1,11 @@
 export function createSearchForm() {
   const form = document.createElement("form");
-  form.classList.add("search-form");
+  form.classList.add("search-overlay__form");
   form.setAttribute("role", "search");
   form.noValidate = true;
 
   const input = document.createElement("input");
-  input.classList.add("search-form__input");
+  input.classList.add("search-overlay__input");
   input.type = "search";
   input.name = "q";
   input.placeholder = "Search";

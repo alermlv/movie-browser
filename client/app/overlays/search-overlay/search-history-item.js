@@ -2,19 +2,18 @@ import { createIcon } from "../../components/icon.js";
 
 export function createSearchHistoryItem(historyItem) {
   const item = document.createElement("li");
-  item.classList.add("search-history-item");
+  item.classList.add("search-overlay__history-item");
 
   const link = document.createElement("a");
-  link.classList.add("search-history-item__link");
+  link.classList.add("search-overlay__history-link");
   link.href = historyItem.href;
   link.dataset.searchHistoryItem = "true";
   link.dataset.closeDialog = "search";
 
   const historyIcon = createIcon("icon-history");
-  historyIcon.classList.add("search-history-item__icon");
 
   const title = document.createElement("span");
-  title.classList.add("search-history-item__title");
+  title.classList.add("search-overlay__history-title");
   title.textContent = historyItem.title;
 
   const chevronIcon = createIcon("icon-chevron-forward");

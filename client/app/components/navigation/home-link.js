@@ -4,6 +4,7 @@ export function createHomeLink() {
   const homeLink = document.createElement("a");
   homeLink.classList.add("nav__home-link");
   homeLink.href = "/";
+  homeLink.setAttribute("aria-label", "Home");
 
   const logo = createMainLogo();
 
