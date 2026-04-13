@@ -1,7 +1,7 @@
 import { ROUTES } from "./routes.js";
 import { getPageRoot } from "../layout/app-shell.js";
 import { commitState, getState } from "../state/state.js";
-import { runRouteEffects } from "../actions/route-effects.js";
+import { runRouteEffects } from "../effects/route-effects.js";
 import { renderHomePage } from "../pages/home.js";
 import { renderSearchPage } from "../pages/search.js";
 import { renderDetailsPage } from "../pages/details.js";

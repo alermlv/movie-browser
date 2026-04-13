@@ -1,8 +1,8 @@
 import { ROUTES } from "../router/routes.js";
-import { loadHomePage } from "./home-actions.js";
-import { loadSearchPage } from "./search-actions.js";
-import { loadDetailsPage } from "./details-actions.js";
-import { loadGenres } from "./genres-actions.js";
+import { loadHomePage } from "../actions/home-actions.js";
+import { loadSearchPage } from "../actions/search-actions.js";
+import { loadDetailsPage } from "../actions/details-actions.js";
+import { loadGenres } from "../actions/genres-actions.js";
 
 let previousRouteKey = "";
 let isGenresLoading = false;
