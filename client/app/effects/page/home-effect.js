@@ -9,10 +9,14 @@ export async function loadHomePage() {
     abortController.abort();
   }
 
-  abortController = new AbortController();
+  const currentAbortController = new AbortController();
+  abortController = currentAbortController;
 
   try {
-    const data = await getHomeData({}, { signal: abortController.signal });
+    const data = await getHomeData(
+      {},
+      { signal: currentAbortController.signal },
+    );
 
     commitState((state) => ({
       ...state,
@@ -25,7 +29,14 @@ export async function loadHomePage() {
       },
     }));
   } catch (error) {
-    if (error?.name === "AbortError") return;
+    if (error?.name === "AbortError") {
+      return;
+    }
+
     commitError(error);
+  } finally {
+    if (abortController === currentAbortController) {
+      abortController = null;
+    }
   }
 }

@@ -30,21 +30,28 @@ export async function fetchSearchResults(query) {
     abortController.abort();
   }
 
-  abortController = new AbortController();
+  const currentAbortController = new AbortController();
+  abortController = currentAbortController;
 
-  const payload = await getSearchData(
-    {
-      q: normalizedQuery,
-      limit: SEARCH_LIMIT,
-    },
-    {
-      signal: abortController.signal,
-    },
-  );
+  try {
+    const payload = await getSearchData(
+      {
+        q: normalizedQuery,
+        limit: SEARCH_LIMIT,
+      },
+      {
+        signal: currentAbortController.signal,
+      },
+    );
 
-  return {
-    results: normalizeSearchResults(payload),
-  };
+    return {
+      results: normalizeSearchResults(payload),
+    };
+  } finally {
+    if (abortController === currentAbortController) {
+      abortController = null;
+    }
+  }
 }
 
 function normalizeSearchResults(payload) {

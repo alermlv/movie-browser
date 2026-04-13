@@ -57,10 +57,7 @@ export function bindSearchController({ form, input, resultsList }) {
 }
 
 export function showInitialSearchState(resultsList) {
-  const historyItems = toSearchHistoryViewModels(getState().searchHistory);
-  const historyNodes = historyItems.map(createSearchHistoryItem);
-
-  renderSearchNodes(resultsList, historyNodes);
+  renderSearchHistoryState(resultsList);
 }
 
 function scheduleSearch(input, resultsList) {
@@ -69,10 +66,7 @@ function scheduleSearch(input, resultsList) {
   window.clearTimeout(debounceTimer);
 
   if (!query.length) {
-    const historyItems = toSearchHistoryViewModels(getState().searchHistory);
-    const historyNodes = historyItems.map(createSearchHistoryItem);
-
-    renderSearchNodes(resultsList, historyNodes);
+    renderSearchHistoryState(resultsList);
     return;
   }
 
@@ -95,4 +89,11 @@ function scheduleSearch(input, resultsList) {
       clearSearchResults(resultsList);
     }
   }, SEARCH_DEBOUNCE_MS);
+}
+
+function renderSearchHistoryState(resultsList) {
+  const historyItems = toSearchHistoryViewModels(getState().searchHistory);
+  const historyNodes = historyItems.map(createSearchHistoryItem);
+
+  renderSearchNodes(resultsList, historyNodes);
 }

@@ -9,11 +9,12 @@ export async function loadSearchPage(route) {
     abortController.abort();
   }
 
-  abortController = new AbortController();
+  const currentAbortController = new AbortController();
+  abortController = currentAbortController;
 
   try {
     const data = await getSearchData(route.query, {
-      signal: abortController.signal,
+      signal: currentAbortController.signal,
     });
 
     commitState((state) => ({
@@ -29,7 +30,14 @@ export async function loadSearchPage(route) {
       },
     }));
   } catch (error) {
-    if (error?.name === "AbortError") return;
+    if (error?.name === "AbortError") {
+      return;
+    }
+
     commitError(error);
+  } finally {
+    if (abortController === currentAbortController) {
+      abortController = null;
+    }
   }
 }

@@ -1,9 +1,22 @@
 import { commitState } from "../state/state.js";
 import { getGenresData } from "../api/api.js";
+import { commitError } from "./shared/commit-error.js";
+
+let abortController = null;
 
 export async function loadGenres() {
+  if (abortController) {
+    abortController.abort();
+  }
+
+  const currentAbortController = new AbortController();
+  abortController = currentAbortController;
+
   try {
-    const data = await getGenresData();
+    const data = await getGenresData(
+      {},
+      { signal: currentAbortController.signal },
+    );
 
     commitState((state) => ({
       ...state,
@@ -19,12 +32,14 @@ export async function loadGenres() {
       },
     }));
   } catch (error) {
-    commitState((state) => ({
-      ...state,
-      ui: {
-        ...state.ui,
-        error: error.message,
-      },
-    }));
+    if (error?.name === "AbortError") {
+      return;
+    }
+
+    commitError(error);
+  } finally {
+    if (abortController === currentAbortController) {
+      abortController = null;
+    }
   }
 }
