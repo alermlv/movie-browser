@@ -5,7 +5,7 @@ import {
   firstDayOfLastYear,
   lastDayOfLastYear,
   today,
-} from "./home-config-service.js";
+} from "../utilities/date-range.js";
 
 
 export const homeConfig = [
