@@ -7,7 +7,7 @@ import {
   saveFavorites,
   saveGenresCache,
   saveSearchHistory,
-} from "./storage.js";
+} from "./storage/index.js";
 import { mountAppShell } from "./layout/app-shell.js";
 import { runMigrations } from "./state/migrations.js";
 import { normalizeState } from "./state/normalize-state.js";
