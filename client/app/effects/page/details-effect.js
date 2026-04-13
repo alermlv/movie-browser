@@ -2,7 +2,7 @@ import { commitState } from "../../state/state.js";
 import { getDetailsData } from "../../api/api.js";
 import { commitError } from "../shared/commit-error.js";
 
-let requestId = 0;
+let abortController = null;
 
 export async function loadDetailsPage(route) {
   const { type, id } = route.params;
@@ -12,12 +12,16 @@ export async function loadDetailsPage(route) {
     return;
   }
 
-  const currentRequestId = ++requestId;
+  if (abortController) {
+    abortController.abort();
+  }
+
+  abortController = new AbortController();
 
   try {
-    const data = await getDetailsData(type, id);
-
-    if (currentRequestId !== requestId) return;
+    const data = await getDetailsData(type, id, {
+      signal: abortController.signal,
+    });
 
     commitState((state) => ({
       ...state,
@@ -30,7 +34,7 @@ export async function loadDetailsPage(route) {
       },
     }));
   } catch (error) {
-    if (currentRequestId !== requestId) return;
+    if (error?.name === "AbortError") return;
     commitError(error);
   }
 }

@@ -2,15 +2,17 @@ import { commitState } from "../../state/state.js";
 import { getHomeData } from "../../api/api.js";
 import { commitError } from "../shared/commit-error.js";
 
-let requestId = 0;
+let abortController = null;
 
 export async function loadHomePage() {
-  const currentRequestId = ++requestId;
+  if (abortController) {
+    abortController.abort();
+  }
+
+  abortController = new AbortController();
 
   try {
-    const data = await getHomeData();
-
-    if (currentRequestId !== requestId) return;
+    const data = await getHomeData({}, { signal: abortController.signal });
 
     commitState((state) => ({
       ...state,
@@ -23,7 +25,7 @@ export async function loadHomePage() {
       },
     }));
   } catch (error) {
-    if (currentRequestId !== requestId) return;
+    if (error?.name === "AbortError") return;
     commitError(error);
   }
 }

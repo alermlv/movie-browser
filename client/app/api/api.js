@@ -1,20 +1,20 @@
 import { API_BASE_URL } from "../config/config.js";
 
-export async function getHomeData() {
-  return getJson("/home");
+export async function getHomeData(params = {}, options = {}) {
+  return getJson("/home", params, options);
 }
 
 export async function getSearchData(params = {}, options = {}) {
   return getJson("/search", params, options);
 }
 
-export async function getDetailsData(type, id) {
+export async function getDetailsData(type, id, options = {}) {
   if (type === "movie") {
-    return getJson(`/movie/${encodeURIComponent(id)}`);
+    return getJson(`/movie/${encodeURIComponent(id)}`, {}, options);
   }
 
   if (type === "tv") {
-    return getJson(`/tv/${encodeURIComponent(id)}`);
+    return getJson(`/tv/${encodeURIComponent(id)}`, {}, options);
   }
 
   throw new Error("Invalid details type");

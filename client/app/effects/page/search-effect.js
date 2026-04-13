@@ -2,15 +2,19 @@ import { commitState } from "../../state/state.js";
 import { getSearchData } from "../../api/api.js";
 import { commitError } from "../shared/commit-error.js";
 
-let requestId = 0;
+let abortController = null;
 
 export async function loadSearchPage(route) {
-  const currentRequestId = ++requestId;
+  if (abortController) {
+    abortController.abort();
+  }
+
+  abortController = new AbortController();
 
   try {
-    const data = await getSearchData(route.query);
-
-    if (currentRequestId !== requestId) return;
+    const data = await getSearchData(route.query, {
+      signal: abortController.signal,
+    });
 
     commitState((state) => ({
       ...state,
@@ -25,7 +29,7 @@ export async function loadSearchPage(route) {
       },
     }));
   } catch (error) {
-    if (currentRequestId !== requestId) return;
+    if (error?.name === "AbortError") return;
     commitError(error);
   }
 }
