@@ -19,7 +19,6 @@ import {
 const SEARCH_DEBOUNCE_MS = 250;
 
 let debounceTimer = null;
-let latestRenderedRequestId = 0;
 
 export function bindSearchController({ form, input, resultsList }) {
   input.addEventListener("input", () => {
@@ -70,8 +69,6 @@ function scheduleSearch(input, resultsList) {
   window.clearTimeout(debounceTimer);
 
   if (!query.length) {
-    latestRenderedRequestId = 0;
-
     const historyItems = toSearchHistoryViewModels(getState().searchHistory);
     const historyNodes = historyItems.map(createSearchHistoryItem);
 
@@ -80,22 +77,15 @@ function scheduleSearch(input, resultsList) {
   }
 
   if (query.length < getSearchMinLength()) {
-    latestRenderedRequestId = 0;
     clearSearchResults(resultsList);
     return;
   }
 
   debounceTimer = window.setTimeout(async () => {
     try {
-      const { requestId, results } = await fetchSearchResults(query);
-
-      if (requestId < latestRenderedRequestId) {
-        return;
-      }
-
-      latestRenderedRequestId = requestId;
-
+      const { results } = await fetchSearchResults(query);
       const resultNodes = results.map(createSearchResult);
+
       renderSearchNodes(resultsList, resultNodes);
     } catch (error) {
       if (error?.name === "AbortError") {

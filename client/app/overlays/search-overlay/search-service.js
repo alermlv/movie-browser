@@ -4,7 +4,6 @@ const SEARCH_MIN_LENGTH = 2;
 const SEARCH_LIMIT = 10;
 
 let abortController = null;
-let requestId = 0;
 
 export function getSearchMinLength() {
   return SEARCH_MIN_LENGTH;
@@ -23,7 +22,6 @@ export async function fetchSearchResults(query) {
 
   if (!canSearch(normalizedQuery)) {
     return {
-      requestId: ++requestId,
       results: [],
     };
   }
@@ -33,7 +31,6 @@ export async function fetchSearchResults(query) {
   }
 
   abortController = new AbortController();
-  const currentRequestId = ++requestId;
 
   const payload = await getSearchData(
     {
@@ -46,7 +43,6 @@ export async function fetchSearchResults(query) {
   );
 
   return {
-    requestId: currentRequestId,
     results: normalizeSearchResults(payload),
   };
 }
