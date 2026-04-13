@@ -1,4 +1,4 @@
-import { createMainLogo } from "../main-logo.js";
+import { createMainLogo } from "./main-logo.js";
 
 export function createHomeLink() {
   const homeLink = document.createElement("a");
