@@ -63,6 +63,11 @@ export function subscribe(listener) {
 
 export function commitState(updater) {
   const nextState = updater(state);
+
+  if (!nextState || typeof nextState !== "object") {
+    throw new Error("State updater must return an object");
+  }
+
   state = nextState;
   listeners.forEach((listener) => listener(state));
 }

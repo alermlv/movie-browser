@@ -1,6 +1,6 @@
 import { navigate, parseRouteFromUrl } from "./router.js";
 
-export function setupLinkDelegation() {
+export function setupLinkNavigation() {
   document.addEventListener("click", handleDocumentClick);
 }
 

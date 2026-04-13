@@ -20,6 +20,11 @@ export function setupRouter() {
 
 export function navigate(route) {
   const url = buildUrl(route);
+  const currentUrl = `${window.location.pathname}${window.location.search}`;
+
+  if (url === currentUrl) {
+    return;
+  }
 
   window.history.pushState({}, "", url);
   syncRouteWithUrl();

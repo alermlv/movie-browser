@@ -12,8 +12,8 @@ import { mountAppShell } from "./layout/app-shell.js";
 import { runMigrations } from "./state/migrations.js";
 import { normalizeState } from "./state/normalize-state.js";
 import { runRouteEffects } from "./effects/route-effects.js";
-import { setupLinkDelegation } from "./router/link-navigation.js";
-import { setupOverlayDelegation } from "./overlays/overlay-events.js";
+import { setupLinkNavigation } from "./router/link-navigation.js";
+import { setupOverlayEvents } from "./overlays/overlay-events.js";
 import { renderOverlay } from "./overlays/render-overlay.js";
 import { updateScrollLock } from "./layout/scroll-lock.js";
 
@@ -25,8 +25,8 @@ function init() {
   mountAppShell();
   hydrateAppState();
   setupRouter();
-  setupLinkDelegation();
-  setupOverlayDelegation();
+  setupLinkNavigation();
+  setupOverlayEvents();
   runRouteEffects(getState().route, getState().genres);
 }
 

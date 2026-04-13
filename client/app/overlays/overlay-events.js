@@ -21,7 +21,7 @@ const FOCUSABLE_SELECTOR = [
 let lastDialogTrigger = null;
 let previousActiveElement = null;
 
-export function setupOverlayDelegation() {
+export function setupOverlayEvents() {
   document.addEventListener("click", handleOverlayClick);
   document.addEventListener("keydown", handleOverlayKeydown);
 }
