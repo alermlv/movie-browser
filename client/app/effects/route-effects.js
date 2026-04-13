@@ -1,9 +1,7 @@
 import { ROUTES } from "../router/routes.js";
-import {
-  loadDetailsPage,
-  loadHomePage,
-  loadSearchPage,
-} from "./page-effects.js";
+import { loadHomePage } from "./page/home-effect.js";
+import { loadSearchPage } from "./page/search-effect.js";
+import { loadDetailsPage } from "./page/details-effect.js";
 import { loadGenres } from "./genres-effects.js";
 
 let previousRouteKey = "";
@@ -11,11 +9,11 @@ let isGenresLoading = false;
 
 export function runRouteEffects(route, genres) {
   runPageEffect(route);
-  runGenresEffect(genres);
+  ensureGenresLoaded(genres);
 }
 
 function runPageEffect(route) {
-  const routeKey = JSON.stringify(route);
+  const routeKey = getRouteKey(route);
 
   if (routeKey === previousRouteKey) {
     return;
@@ -38,7 +36,7 @@ function runPageEffect(route) {
   }
 }
 
-function runGenresEffect(genres) {
+function ensureGenresLoaded(genres) {
   const hasMovieGenres = Object.keys(genres.byType.movie).length > 0;
   const hasTvGenres = Object.keys(genres.byType.tv).length > 0;
 
@@ -55,4 +53,8 @@ function runGenresEffect(genres) {
   loadGenres().finally(() => {
     isGenresLoading = false;
   });
+}
+
+function getRouteKey(route) {
+  return `${route.name}|${JSON.stringify(route.params)}|${JSON.stringify(route.query)}`;
 }
