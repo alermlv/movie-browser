@@ -20,12 +20,13 @@ export async function getDetailsData(type, id, options = {}) {
   throw new Error("Invalid details type");
 }
 
-export async function getGenresData(params = {}) {
-  return getJson("/genres", params);
+export async function getGenresData(params = {}, options = {}) {
+  return getJson("/genres", params, options);
 }
 
 async function getJson(path, params = {}, options = {}) {
   const url = buildUrl(path, params);
+
   const response = await fetch(url, {
     signal: options.signal,
   });
@@ -41,12 +42,7 @@ function buildUrl(path, params = {}) {
   const url = new URL(`${API_BASE_URL}${path}`, window.location.origin);
 
   Object.entries(params).forEach(([key, value]) => {
-    if (
-      key !== "signal" &&
-      value !== undefined &&
-      value !== null &&
-      value !== ""
-    ) {
+    if (value !== undefined && value !== null && value !== "") {
       url.searchParams.set(key, String(value));
     }
   });
