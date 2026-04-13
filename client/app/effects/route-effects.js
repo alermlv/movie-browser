@@ -1,8 +1,10 @@
 import { ROUTES } from "../router/routes.js";
-import { loadHomePage } from "../actions/home-actions.js";
-import { loadSearchPage } from "../actions/search-actions.js";
-import { loadDetailsPage } from "../actions/details-actions.js";
-import { loadGenres } from "../actions/genres-actions.js";
+import {
+  loadDetailsPage,
+  loadHomePage,
+  loadSearchPage,
+} from "./page-effects.js";
+import { loadGenres } from "./genres-effects.js";
 
 let previousRouteKey = "";
 let isGenresLoading = false;
