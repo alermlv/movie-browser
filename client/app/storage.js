@@ -1,4 +1,4 @@
-import { STORAGE_KEYS } from "../config/config.js";
+import { STORAGE_KEYS } from "./config/config.js";
 
 export function loadFavorites() {
   return load(STORAGE_KEYS.FAVORITES, []);
