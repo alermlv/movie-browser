@@ -13,7 +13,7 @@ import { runMigrations } from "./state/migrations.js";
 import { normalizeState } from "./state/normalize-state.js";
 import { runRouteEffects } from "./effects/route-effects.js";
 import { setupLinkDelegation } from "./router/link-navigation.js";
-import { setupOverlayDelegation } from "./overlays/overlay-delegation.js";
+import { setupOverlayDelegation } from "./overlays/overlay-events.js";
 import { renderOverlay } from "./overlays/render-overlay.js";
 import { updateScrollLock } from "./layout/scroll-lock.js";
 
