@@ -16,6 +16,8 @@
   --color-status-warning: #eab308;
   --color-status-info: #3b82f6;
 
+  --color-overlay-backdrop: rgb(0 0 0 / 0.2);
+
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -44,4 +46,7 @@
   
   --font-weight-regular: 400;
   --font-weight-semibold: 600;
+
+  --z-navigation: 100;
+  --z-overlay: 100;
 }
