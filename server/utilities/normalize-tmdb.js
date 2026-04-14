@@ -1,7 +1,8 @@
-export function normalizeHomeSection(sectionConfig, results) {
+export function normalizeHomeSection(sectionConfig, results, query = null) {
   return {
     title: sectionConfig.title,
     type: sectionConfig.type,
+    query,
     items: results.map(normalizeSearchResult).filter(Boolean),
   };
 }

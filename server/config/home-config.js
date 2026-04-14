@@ -1,12 +1,11 @@
 import { TMDB_TYPE, TMDB_PATHS } from "./tmdb-config.js";
-import { 
+import {
   firstDayOfPrevMonth,
   lastDayOfPrevMonth,
   firstDayOfLastYear,
   lastDayOfLastYear,
   today,
 } from "../utilities/date-range.js";
-
 
 export const homeConfig = [
   {
@@ -31,6 +30,12 @@ export const homeConfig = [
       "primary_release_date.lte": lastDayOfPrevMonth,
       sort_by: "popularity.desc",
     }),
+    query: () => ({
+      type: "movie",
+      sort: "popularity.desc",
+      yearFrom: firstDayOfPrevMonth,
+      yearTo: lastDayOfPrevMonth,
+    }),
   },
   {
     key: "topTvLastMonth",
@@ -41,6 +46,12 @@ export const homeConfig = [
       "first_air_date.gte": firstDayOfPrevMonth,
       "first_air_date.lte": lastDayOfPrevMonth,
       sort_by: "popularity.desc",
+    }),
+    query: () => ({
+      type: "tv",
+      sort: "popularity.desc",
+      yearFrom: firstDayOfPrevMonth,
+      yearTo: lastDayOfPrevMonth,
     }),
   },
   {
@@ -66,6 +77,12 @@ export const homeConfig = [
       sort_by: "vote_average.desc",
       "vote_count.gte": 200,
     }),
+    query: () => ({
+      type: "movie",
+      sort: "vote_average.desc",
+      yearFrom: firstDayOfLastYear,
+      yearTo: lastDayOfLastYear,
+    }),
   },
   {
     key: "topTvLastYear",
@@ -78,18 +95,32 @@ export const homeConfig = [
       sort_by: "vote_average.desc",
       "vote_count.gte": 100,
     }),
+    query: () => ({
+      type: "tv",
+      sort: "vote_average.desc",
+      yearFrom: firstDayOfLastYear,
+      yearTo: lastDayOfLastYear,
+    }),
   },
   {
     key: "topRatedMovies",
     title: "Top Rated Movies",
     type: TMDB_TYPE.MOVIE,
     path: TMDB_PATHS.TOP_RATED_MOVIES,
+    query: {
+      type: "movie",
+      sort: "vote_average.desc",
+    },
   },
   {
     key: "topRatedTv",
     title: "Top Rated TV Shows",
     type: TMDB_TYPE.TV,
     path: TMDB_PATHS.TOP_RATED_TV,
+    query: {
+      type: "tv",
+      sort: "vote_average.desc",
+    },
   },
   {
     key: "actionMovies",
@@ -100,6 +131,11 @@ export const homeConfig = [
       with_genres: 28,
       sort_by: "popularity.desc",
     }),
+    query: {
+      type: "movie",
+      genreIds: "28",
+      sort: "popularity.desc",
+    },
   },
   {
     key: "comedyMovies",
@@ -110,6 +146,11 @@ export const homeConfig = [
       with_genres: 35,
       sort_by: "popularity.desc",
     }),
+    query: {
+      type: "movie",
+      genreIds: "35",
+      sort: "popularity.desc",
+    },
   },
   {
     key: "scifiMovies",
@@ -120,6 +161,11 @@ export const homeConfig = [
       with_genres: 878,
       sort_by: "popularity.desc",
     }),
+    query: {
+      type: "movie",
+      genreIds: "878",
+      sort: "popularity.desc",
+    },
   },
   {
     key: "dramaTv",
@@ -130,12 +176,22 @@ export const homeConfig = [
       with_genres: 18,
       sort_by: "popularity.desc",
     }),
+    query: {
+      type: "tv",
+      genreIds: "18",
+      sort: "popularity.desc",
+    },
   },
   {
     key: "upcomingMovies",
     title: "Upcoming Movies",
     type: TMDB_TYPE.MOVIE,
     path: TMDB_PATHS.UPCOMING_MOVIES,
+    query: () => ({
+      type: "movie",
+      sort: "popularity.desc",
+      yearFrom: today,
+    }),
   },
   {
     key: "upcomingAnimatedMovies",
@@ -146,6 +202,12 @@ export const homeConfig = [
       with_genres: 16,
       "primary_release_date.gte": today,
       sort_by: "popularity.desc",
+    }),
+    query: () => ({
+      type: "movie",
+      genreIds: "16",
+      yearFrom: today,
+      sort: "popularity.desc",
     }),
   },
   {
@@ -159,6 +221,12 @@ export const homeConfig = [
       "vote_count.gte": 100,
       sort_by: "vote_average.desc",
     }),
+    query: {
+      type: "movie",
+      genreIds: "16",
+      ratingFrom: "7",
+      sort: "vote_average.desc",
+    },
   },
   {
     key: "kidsAnimatedMovies",
