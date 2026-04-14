@@ -1,7 +1,3 @@
-body.scroll-locked {
-  overflow: hidden;
-}
-
 .page {
   background: var(--color-bg-base);
 }
