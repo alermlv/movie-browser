@@ -1,4 +1,5 @@
-const ALLOWED_TYPES = new Set(["movie", "tv", "all"]);
+const ALLOWED_SEARCH_TYPES = new Set(["movie", "tv", "all"]);
+const ALLOWED_GENRES_TYPES = new Set(["movie", "tv", "all"]);
 const ALLOWED_DETAIL_TYPES = new Set(["movie", "tv"]);
 
 export function readSearchParams(query) {
@@ -16,12 +17,28 @@ export function readSearchParams(query) {
 }
 
 export function validateSearchParams(searchParams) {
-  if (!ALLOWED_TYPES.has(searchParams.type)) {
+  if (!ALLOWED_SEARCH_TYPES.has(searchParams.type)) {
     throw createBadRequestError("Invalid search type.");
   }
 
   if (searchParams.page < 1) {
     throw createBadRequestError("Invalid page.");
+  }
+
+  if (
+    searchParams.ratingFrom &&
+    searchParams.ratingTo &&
+    Number(searchParams.ratingFrom) > Number(searchParams.ratingTo)
+  ) {
+    throw createBadRequestError("Invalid rating range.");
+  }
+
+  if (
+    searchParams.yearFrom &&
+    searchParams.yearTo &&
+    searchParams.yearFrom > searchParams.yearTo
+  ) {
+    throw createBadRequestError("Invalid year range.");
   }
 }
 
@@ -49,7 +66,7 @@ export function readGenresParams(query) {
 }
 
 export function validateGenresParams(genresParams) {
-  if (!ALLOWED_TYPES.has(genresParams.type)) {
+  if (!ALLOWED_GENRES_TYPES.has(genresParams.type)) {
     throw createBadRequestError("Invalid genres type.");
   }
 }

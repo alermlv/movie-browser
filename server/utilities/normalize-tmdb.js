@@ -8,26 +8,31 @@ export function normalizeHomeSection(sectionConfig, results) {
 
 export function normalizeSearchResult(item) {
   const type = readItemType(item);
+  const id = String(item?.id || "").trim();
 
-  if (!type) {
+  if (!type || !id) {
     return null;
   }
 
   return {
-    id: item.id,
+    id,
     type,
     title: item.title || item.name || "",
     posterPath: item.poster_path || "",
     backdropPath: item.backdrop_path || "",
     releaseDate: item.release_date || item.first_air_date || "",
     voteAverage: Number(item.vote_average || 0),
-    genreIds: Array.isArray(item.genre_ids) ? item.genre_ids : [],
+    genreIds: Array.isArray(item.genre_ids)
+      ? item.genre_ids.map((genreId) => String(genreId))
+      : [],
   };
 }
 
 export function normalizeDetailsItem(type, item) {
+  const id = String(item?.id || "").trim();
+
   return {
-    id: item.id,
+    id,
     type,
     title: item.title || item.name || "",
     posterPath: item.poster_path || "",
@@ -36,8 +41,16 @@ export function normalizeDetailsItem(type, item) {
     releaseDate: item.release_date || item.first_air_date || "",
     voteAverage: Number(item.vote_average || 0),
     voteCount: Number(item.vote_count || 0),
-    runtime: Number(item.runtime || 0),
-    genres: Array.isArray(item.genres) ? item.genres.map(normalizeGenre) : [],
+
+    runtime:
+      Number(item.runtime || 0) ||
+      Number(
+        Array.isArray(item.episode_run_time) ? item.episode_run_time[0] : 0,
+      ),
+
+    genres: Array.isArray(item.genres)
+      ? item.genres.map(normalizeGenre).filter(Boolean)
+      : [],
   };
 }
 
@@ -50,9 +63,16 @@ export function normalizeGenresMap(genres) {
 }
 
 function normalizeGenre(genre) {
+  const id = String(genre?.id || "").trim();
+  const name = genre?.name || "";
+
+  if (!id || !name) {
+    return null;
+  }
+
   return {
-    id: genre.id,
-    name: genre.name || "",
+    id,
+    name,
   };
 }
 
