@@ -10,7 +10,7 @@ export function getSearchMinLength() {
 }
 
 export function normalizeSearchQuery(query) {
-  return query.trim();
+  return String(query || "").trim();
 }
 
 export function canSearch(query) {

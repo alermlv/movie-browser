@@ -12,8 +12,8 @@ import { createSearchResult } from "./search-result.js";
 import { createSearchHistoryItem } from "./search-history-item.js";
 import {
   createQueryHistoryItem,
+  createSearchHistoryViewModels,
   addSearchHistoryItem,
-  toSearchHistoryViewModels,
 } from "./history-service.js";
 
 const SEARCH_DEBOUNCE_MS = 250;
@@ -87,12 +87,14 @@ function scheduleSearch(input, resultsList) {
       }
 
       clearSearchResults(resultsList);
+    } finally {
+      debounceTimer = null;
     }
   }, SEARCH_DEBOUNCE_MS);
 }
 
 function renderSearchHistoryState(resultsList) {
-  const historyItems = toSearchHistoryViewModels(getState().searchHistory);
+  const historyItems = createSearchHistoryViewModels(getState().searchHistory);
   const historyNodes = historyItems.map(createSearchHistoryItem);
 
   renderSearchNodes(resultsList, historyNodes);

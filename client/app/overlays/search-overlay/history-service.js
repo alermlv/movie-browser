@@ -44,7 +44,7 @@ export function addSearchHistoryItem(searchHistory, nextItem) {
   return [nextItem, ...filteredHistory].slice(0, SEARCH_HISTORY_LIMIT);
 }
 
-export function toSearchHistoryViewModels(searchHistory) {
+export function createSearchHistoryViewModels(searchHistory) {
   const history = Array.isArray(searchHistory) ? searchHistory : [];
 
   return history

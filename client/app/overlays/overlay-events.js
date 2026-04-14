@@ -1,6 +1,7 @@
 import { commitState, getState } from "../state/state.js";
 import {
   createResultHistoryItem,
+  createQueryHistoryItem,
   addSearchHistoryItem,
 } from "./search-overlay/history-service.js";
 
@@ -74,7 +75,36 @@ function handleOverlayClick(event) {
     "[data-search-history-item='true']",
   );
   if (searchHistoryLink) {
-    closeActiveDialog();
+    const href = searchHistoryLink.getAttribute("href") || "";
+
+    let historyItem = null;
+
+    try {
+      const url = new URL(href, window.location.origin);
+
+      if (url.pathname === "/search") {
+        const query = url.searchParams.get("q");
+        historyItem = createQueryHistoryItem(query);
+      } else {
+        const parts = url.pathname.split("/").filter(Boolean);
+
+        if (parts.length === 2) {
+          historyItem = createResultHistoryItem({
+            type: parts[0],
+            id: parts[1],
+            title: searchHistoryLink.textContent || "",
+          });
+        }
+      }
+    } catch {}
+
+    closeActiveDialog({
+      beforeClose: (state) => ({
+        ...state,
+        searchHistory: addSearchHistoryItem(state.searchHistory, historyItem),
+      }),
+    });
+
     return;
   }
 
