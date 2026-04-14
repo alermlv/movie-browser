@@ -41,13 +41,11 @@ export function normalizeDetailsItem(type, item) {
     releaseDate: item.release_date || item.first_air_date || "",
     voteAverage: Number(item.vote_average || 0),
     voteCount: Number(item.vote_count || 0),
-
     runtime:
       Number(item.runtime || 0) ||
       Number(
         Array.isArray(item.episode_run_time) ? item.episode_run_time[0] : 0,
       ),
-
     genres: Array.isArray(item.genres)
       ? item.genres.map(normalizeGenre).filter(Boolean)
       : [],
