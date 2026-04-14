@@ -1,5 +1,7 @@
 import { env } from "../config/env.js";
 
+const TMDB_TIMEOUT_MS = 8000;
+
 export async function getTmdb(path, params = {}) {
   const url = buildTmdbUrl(path, params);
   const response = await fetchTmdb(url);
@@ -21,12 +23,20 @@ function buildTmdbUrl(path, params) {
 }
 
 async function fetchTmdb(url) {
-  return fetch(url, {
-    headers: {
-      Authorization: `Bearer ${env.TMDB_API_TOKEN}`,
-      Accept: "application/json",
-    },
-  });
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), TMDB_TIMEOUT_MS);
+
+  try {
+    return await fetch(url, {
+      signal: controller.signal,
+      headers: {
+        Authorization: `Bearer ${env.TMDB_API_TOKEN}`,
+        Accept: "application/json",
+      },
+    });
+  } finally {
+    clearTimeout(timeoutId);
+  }
 }
 
 async function readTmdbResponse(response) {

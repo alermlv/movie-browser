@@ -28,7 +28,8 @@ async function fetchGenresByType(type) {
 
   return {
     byType: {
-      [type]: normalizeGenresMap(data.genres || []),
+      movie: type === "movie" ? normalizeGenresMap(data.genres || []) : {},
+      tv: type === "tv" ? normalizeGenresMap(data.genres || []) : {},
     },
   };
 }

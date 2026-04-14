@@ -1,6 +1,11 @@
 import { getTmdb } from "./tmdb-client.js";
 import { normalizeSearchResult } from "../utilities/normalize-tmdb.js";
 
+const SEARCH_SCENARIOS = {
+  TEXT: "text",
+  DISCOVER: "discover",
+};
+
 export async function getSearchData(searchParams) {
   const scenario = decideSearchScenario(searchParams);
   const data = await fetchScenarioData(scenario, searchParams);
@@ -10,14 +15,14 @@ export async function getSearchData(searchParams) {
 
 function decideSearchScenario(searchParams) {
   if (searchParams.q) {
-    return "text-search";
+    return SEARCH_SCENARIOS.TEXT;
   }
 
-  return "discover";
+  return SEARCH_SCENARIOS.DISCOVER;
 }
 
 async function fetchScenarioData(scenario, searchParams) {
-  if (scenario === "text-search") {
+  if (scenario === SEARCH_SCENARIOS.TEXT) {
     return fetchTextSearchData(searchParams);
   }
 
@@ -26,8 +31,8 @@ async function fetchScenarioData(scenario, searchParams) {
 
 async function fetchTextSearchData(searchParams) {
   return getTmdb("/search/multi", {
-    query: searchParams.q,
-    page: searchParams.page,
+    query: String(searchParams.q || ""),
+    page: Number(searchParams.page) || 1,
   });
 }
 
@@ -35,19 +40,19 @@ async function fetchDiscoverData(searchParams) {
   const type = searchParams.type === "tv" ? "tv" : "movie";
 
   return getTmdb(`/discover/${type}`, {
-    page: searchParams.page,
-    sort_by: searchParams.sort,
-    with_genres: searchParams.genreIds,
-    "vote_average.gte": searchParams.ratingFrom,
-    "vote_average.lte": searchParams.ratingTo,
+    page: Number(searchParams.page) || 1,
+    sort_by: searchParams.sort || undefined,
+    with_genres: searchParams.genreIds || undefined,
+    "vote_average.gte": Number(searchParams.ratingFrom) || undefined,
+    "vote_average.lte": Number(searchParams.ratingTo) || undefined,
     ...(type === "movie"
       ? {
-          "primary_release_date.gte": searchParams.yearFrom,
-          "primary_release_date.lte": searchParams.yearTo,
+          "primary_release_date.gte": searchParams.yearFrom || undefined,
+          "primary_release_date.lte": searchParams.yearTo || undefined,
         }
       : {
-          "first_air_date.gte": searchParams.yearFrom,
-          "first_air_date.lte": searchParams.yearTo,
+          "first_air_date.gte": searchParams.yearFrom || undefined,
+          "first_air_date.lte": searchParams.yearTo || undefined,
         }),
   });
 }
