@@ -30,5 +30,8 @@ function createApp() {
 function startServer() {
   app.listen(env.PORT, () => {
     console.log(`Server is running on http://localhost:${env.PORT}`);
+  }).on("error", (error) => {
+    console.error("Failed to start server", error);
+    process.exit(1);
   });
 }

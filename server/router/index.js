@@ -9,10 +9,10 @@ export const router = express.Router();
 
 router.get("/health", handleHealthCheck);
 router.use("/home", homeRouter);
-router.use("/movie/:id", movieDetailsRouter);
-router.use("/tv/:id", tvDetailsRouter);
 router.use("/search", searchRouter);
 router.use("/genres", genresRouter);
+router.use("/movie/:id", movieDetailsRouter);
+router.use("/tv/:id", tvDetailsRouter);
 
 function handleHealthCheck(request, response) {
   response.json({ ok: true });
