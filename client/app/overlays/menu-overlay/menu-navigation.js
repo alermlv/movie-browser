@@ -11,9 +11,9 @@ export function createMenuNavigation() {
   const favoritesLink = createMenuLink("Favorites", "/favorites");
   favoritesLink.dataset.autofocus = "true";
 
-  const moviesLink = createMenuLink("Movies", "/search?type=movie");
-  const tvShowsLink = createMenuLink("TV Shows", "/search?type=tv");
-  const animationLink = createMenuLink("Animation", "/search?genre=animation");
+  const moviesLink = createMenuLink("Movies", "/search?type=movie&sort=popularity.desc");
+  const tvShowsLink = createMenuLink("TV Shows", "/search?type=tv&sort=popularity.desc");
+  const animationLink = createMenuLink("Animation", "/search?type=movie&genreIds=16&sort=popularity.desc");
 
   list.append(
     wrapItem(favoritesLink),

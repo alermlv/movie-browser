@@ -4,7 +4,7 @@ export function createMenuButton() {
   const menuButton = document.createElement("button");
   menuButton.type = "button";
   menuButton.classList.add("button", "button--menu");
-  menuButton.setAttribute("aria-label", "Menu");
+  menuButton.setAttribute("aria-label", "Open menu");
   menuButton.dataset.openDialog = "menu";
 
   const icon = createIcon("icon-menu");

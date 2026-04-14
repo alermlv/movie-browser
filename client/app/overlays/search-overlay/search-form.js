@@ -11,7 +11,6 @@ export function createSearchForm() {
   input.placeholder = "Search";
   input.autocomplete = "off";
   input.spellcheck = false;
-  input.value = "";
   input.setAttribute("aria-label", "Search");
   input.dataset.autofocus = "true";
 
