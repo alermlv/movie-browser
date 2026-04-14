@@ -9,7 +9,7 @@ export function createMenuNavigation() {
   list.classList.add("menu-overlay__list");
 
   const favoritesLink = createMenuLink("Favorites", "/favorites");
-  
+  favoritesLink.dataset.autofocus = "true";
 
   const moviesLink = createMenuLink("Movies", "/search?type=movie");
   const tvShowsLink = createMenuLink("TV Shows", "/search?type=tv");
