@@ -1,10 +1,20 @@
 const ALLOWED_SEARCH_TYPES = new Set(["movie", "tv", "all"]);
 const ALLOWED_GENRES_TYPES = new Set(["movie", "tv", "all"]);
 const ALLOWED_DETAIL_TYPES = new Set(["movie", "tv"]);
+const ALLOWED_COLLECTIONS = new Set([
+  "trendingMovies",
+  "trendingTv",
+  "nowPlayingMovies",
+  "onTheAirTv",
+  "topRatedMovies",
+  "topRatedTv",
+  "upcomingMovies",
+]);
 
 export function readSearchParams(query) {
   return {
     q: readString(query.q),
+    collection: readString(query.collection),
     type: readString(query.type) || "all",
     page: readPositiveInteger(query.page, 1),
     sort: readString(query.sort) || "popularity.desc",
@@ -19,6 +29,13 @@ export function readSearchParams(query) {
 export function validateSearchParams(searchParams) {
   if (!ALLOWED_SEARCH_TYPES.has(searchParams.type)) {
     throw createBadRequestError("Invalid search type.");
+  }
+
+  if (
+    searchParams.collection &&
+    !ALLOWED_COLLECTIONS.has(searchParams.collection)
+  ) {
+    throw createBadRequestError("Invalid collection.");
   }
 
   if (searchParams.page < 1) {

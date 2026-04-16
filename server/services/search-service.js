@@ -1,9 +1,35 @@
+import { TMDB_PATHS } from "../config/tmdb-config.js";
 import { getTmdb } from "./tmdb-client.js";
 import { normalizeSearchResult } from "../utilities/normalize-tmdb.js";
 
 const SEARCH_SCENARIOS = {
   TEXT: "text",
+  COLLECTION: "collection",
   DISCOVER: "discover",
+};
+
+const SEARCH_COLLECTIONS = {
+  trendingMovies: {
+    path: TMDB_PATHS.TRENDING_MOVIES,
+  },
+  trendingTv: {
+    path: TMDB_PATHS.TRENDING_TV,
+  },
+  nowPlayingMovies: {
+    path: TMDB_PATHS.NOW_PLAYING_MOVIES,
+  },
+  onTheAirTv: {
+    path: TMDB_PATHS.ON_THE_AIR_TV,
+  },
+  topRatedMovies: {
+    path: TMDB_PATHS.TOP_RATED_MOVIES,
+  },
+  topRatedTv: {
+    path: TMDB_PATHS.TOP_RATED_TV,
+  },
+  upcomingMovies: {
+    path: TMDB_PATHS.UPCOMING_MOVIES,
+  },
 };
 
 export async function getSearchData(searchParams) {
@@ -18,12 +44,20 @@ function decideSearchScenario(searchParams) {
     return SEARCH_SCENARIOS.TEXT;
   }
 
+  if (searchParams.collection) {
+    return SEARCH_SCENARIOS.COLLECTION;
+  }
+
   return SEARCH_SCENARIOS.DISCOVER;
 }
 
 async function fetchScenarioData(scenario, searchParams) {
   if (scenario === SEARCH_SCENARIOS.TEXT) {
     return fetchTextSearchData(searchParams);
+  }
+
+  if (scenario === SEARCH_SCENARIOS.COLLECTION) {
+    return fetchCollectionData(searchParams);
   }
 
   return fetchDiscoverData(searchParams);
@@ -36,10 +70,24 @@ async function fetchTextSearchData(searchParams) {
   });
 }
 
+async function fetchCollectionData(searchParams) {
+  const collectionConfig = SEARCH_COLLECTIONS[searchParams.collection];
+
+  if (!collectionConfig) {
+    const error = new Error("Unknown search collection.");
+    error.status = 400;
+    throw error;
+  }
+
+  return getTmdb(collectionConfig.path, {
+    page: Number(searchParams.page) || 1,
+  });
+}
+
 async function fetchDiscoverData(searchParams) {
   const type = searchParams.type === "tv" ? "tv" : "movie";
 
-  return getTmdb(`/discover/${type}`, {
+  return getTmdb(TMDB_PATHS.DISCOVER(type), {
     page: Number(searchParams.page) || 1,
     sort_by: searchParams.sort || undefined,
     with_genres: searchParams.genreIds || undefined,

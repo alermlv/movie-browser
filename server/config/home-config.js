@@ -13,12 +13,18 @@ export const homeConfig = [
     title: "Trending Movies",
     type: TMDB_TYPE.MOVIE,
     path: TMDB_PATHS.TRENDING_MOVIES,
+    query: {
+      collection: "trendingMovies",
+    },
   },
   {
     key: "trendingTv",
     title: "Trending TV Shows",
     type: TMDB_TYPE.TV,
     path: TMDB_PATHS.TRENDING_TV,
+    query: {
+      collection: "trendingTv",
+    },
   },
   {
     key: "topMoviesLastMonth",
@@ -59,12 +65,18 @@ export const homeConfig = [
     title: "Now Playing Movies",
     type: TMDB_TYPE.MOVIE,
     path: TMDB_PATHS.NOW_PLAYING_MOVIES,
+    query: {
+      collection: "nowPlayingMovies",
+    },
   },
   {
     key: "onTheAirTv",
     title: "On The Air TV Shows",
     type: TMDB_TYPE.TV,
     path: TMDB_PATHS.ON_THE_AIR_TV,
+    query: {
+      collection: "onTheAirTv",
+    },
   },
   {
     key: "topMoviesLastYear",
@@ -108,8 +120,7 @@ export const homeConfig = [
     type: TMDB_TYPE.MOVIE,
     path: TMDB_PATHS.TOP_RATED_MOVIES,
     query: {
-      type: "movie",
-      sort: "vote_average.desc",
+      collection: "topRatedMovies",
     },
   },
   {
@@ -118,8 +129,7 @@ export const homeConfig = [
     type: TMDB_TYPE.TV,
     path: TMDB_PATHS.TOP_RATED_TV,
     query: {
-      type: "tv",
-      sort: "vote_average.desc",
+      collection: "topRatedTv",
     },
   },
   {
@@ -187,11 +197,9 @@ export const homeConfig = [
     title: "Upcoming Movies",
     type: TMDB_TYPE.MOVIE,
     path: TMDB_PATHS.UPCOMING_MOVIES,
-    query: () => ({
-      type: "movie",
-      sort: "popularity.desc",
-      yearFrom: today,
-    }),
+    query: {
+      collection: "upcomingMovies",
+    },
   },
   {
     key: "upcomingAnimatedMovies",
@@ -239,5 +247,10 @@ export const homeConfig = [
       "certification.lte": "G",
       sort_by: "popularity.desc",
     }),
+    query: {
+      type: "movie",
+      genreIds: "16",
+      sort: "popularity.desc",
+    },
   },
 ];
